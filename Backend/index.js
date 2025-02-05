@@ -159,7 +159,7 @@ const razorpay = new Razorpay({
   });
   // Sample Route
 app.get('/', (req, res) => {
-  res.send('Welcome to the Express & MongoDB app!');
+  res.send('Wele to the Express & MongoDB app!');
 });
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
