@@ -1705,6 +1705,9 @@ const transporter = nodemailer.createTransport({
     pass: process.env.app_pass, // Your email password or app-specific password
   },
 });
+app.get('/', (req, res) => {
+  res.send('Server is running!');  // This will send the response back to the client
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
