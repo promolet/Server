@@ -1708,6 +1708,6 @@ const transporter = nodemailer.createTransport({
 app.get("/", async (req, res) => {
  console.log("server is running")
 });
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+app.listen(5500, '0.0.0.0', () => {
+    console.log('Server running on port 5500');
 });
