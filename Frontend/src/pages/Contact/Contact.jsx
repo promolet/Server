@@ -20,7 +20,7 @@ const ContactPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://193.203.162.54:5000/api/contact", formData);
+      const response = await axios.post("https://api.prumolet.com/api/contact", formData);
       alert("Message sent successfully!");
       setFormData({
         name: "",

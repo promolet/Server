@@ -16,7 +16,7 @@ const Navbar = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('http://193.203.162.54:5000//api/Product');
+        const response = await axios.get('https://api.prumolet.com//api/Product');
         setProducts(response.data);
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -30,7 +30,7 @@ const Navbar = () => {
     const fetchCartDetails = async () => {
       try {
         const userId = localStorage.getItem('userId');
-        const response = await axios.get(`http://193.203.162.54:5000/api/cart/${userId}`);
+        const response = await axios.get(`https://api.prumolet.com/api/cart/${userId}`);
         if (response.status === 200 && response.data.cart) {
           setCart(response.data.cart);
         } else {

@@ -48,7 +48,7 @@ const Billingpage = () => {
   const handlePlaceOrder = async () => {
     const userId = localStorage.getItem("userId");
     const addressResponse = await axios.get(
-      `http://193.203.162.54:5000/api/addresses/${userId}/${selectedAddressId}`
+      `https://api.prumolet.com/api/addresses/${userId}/${selectedAddressId}`
     );
     const selectedAddress = addressResponse.data.address;
 
@@ -86,7 +86,7 @@ const Billingpage = () => {
 
     try {
       const response = await axios.post(
-        "http://193.203.162.54:5000/api/orders/placeOrder",
+        "https://api.prumolet.com/api/orders/placeOrder",
         orderData
       );
       if (response.data.success) {
@@ -105,7 +105,7 @@ const Billingpage = () => {
     try {
       // Fetch the selected address details
       const addressResponse = await axios.get(
-        `http://193.203.162.54:5000/api/addresses/${userId}/${selectedAddressId}`
+        `https://api.prumolet.com/api/addresses/${userId}/${selectedAddressId}`
       );
       const selectedAddress = addressResponse.data.address;
 
@@ -142,7 +142,7 @@ const Billingpage = () => {
 
       // Create Razorpay order
       const orderResponse = await axios.post(
-        "http://193.203.162.54:5000/api/orders/createRazorpayOrder",
+        "https://api.prumolet.com/api/orders/createRazorpayOrder",
         { amount: orderData.totalAmount, currency: "INR" }
       );
 
@@ -169,7 +169,7 @@ const Billingpage = () => {
 
           try {
             const paymentResponse = await axios.post(
-              "http://193.203.162.54:5000/api/orders/placeOrder",
+              "https://api.prumolet.com/api/orders/placeOrder",
               paymentData
             );
 
@@ -247,7 +247,7 @@ const Billingpage = () => {
             const fetchProductData = async () => {
               try {
                 const response = await axios.get(
-                  `http://193.203.162.54:5000/api/product/${id}`
+                  `https://api.prumolet.com/api/product/${id}`
                 ); // Your API endpoint here
                 setProduct(response.data); // Set the fetched product data
                 setLoading(false); // Set loading to false when data is fetched
@@ -262,7 +262,7 @@ const Billingpage = () => {
             // Fetch cart details for multiple products
             const userId = localStorage.getItem("userId");
             const response = await axios.get(
-              `http://193.203.162.54:5000/api/cart/${userId}`
+              `https://api.prumolet.com/api/cart/${userId}`
             );
 
             console.log("Cart response:", response.data); // Log the entire response
@@ -301,7 +301,7 @@ const Billingpage = () => {
       cartItems.map(async (item) => {
         try {
           const productResponse = await axios.get(
-            `http://193.203.162.54:5000/api/product/${item.productId}`
+            `https://api.prumolet.com/api/product/${item.productId}`
           );
           return { ...item, productDetails: productResponse.data };
         } catch (error) {
@@ -321,7 +321,7 @@ const Billingpage = () => {
           return;
         }
         const response = await axios.get(
-          `http://193.203.162.54:5000/api/addresses/${userId}`
+          `https://api.prumolet.com/api/addresses/${userId}`
         );
 
         if (response.data && Array.isArray(response.data.details)) {
@@ -517,7 +517,7 @@ const Billingpage = () => {
                             <div className="cart-items">
                               <div className="cart-image">
                                 <img
-                                  src={`http://193.203.162.54:5000/${product?.images[0]}`}
+                                  src={`https://api.prumolet.com/${product?.images[0]}`}
                                   className="img-fluid"
                                   alt={product?.title}
                                 />
@@ -538,7 +538,7 @@ const Billingpage = () => {
                                 <li key={item.productId._id}>
                                   <div className="cart-image">
                                     <img
-                                      src={`http://193.203.162.54:5000/${item.productDetails?.images[0]}`}
+                                      src={`https://api.prumolet.com/${item.productDetails?.images[0]}`}
                                       className="img-fluid"
                                       alt={item.productDetails?.title}
                                     />

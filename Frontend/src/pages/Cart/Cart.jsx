@@ -10,7 +10,7 @@ const Cart = () => {
       try {
         const userId = localStorage.getItem('userId');
         const response = await axios.get(
-          `http://193.203.162.54:5000/api/cart/${userId}`
+          `https://api.prumolet.com/api/cart/${userId}`
         );
 
         if (response.data.cart && response.data.cart.products) {
@@ -35,7 +35,7 @@ const Cart = () => {
       cartItems.map(async (item) => {
         try {
           const productResponse = await axios.get(
-            `http://193.203.162.54:5000/api/${item.productId}`
+            `https://api.prumolet.com/api/${item.productId}`
           );
           return { ...item, productDetails: productResponse.data };
         } catch (error) {
@@ -60,7 +60,7 @@ const Cart = () => {
     try {
       const userId = localStorage.getItem('userId');
       const response = await axios.delete(
-        `http://193.203.162.54:5000/api/cart/${userId}/${productId}`
+        `https://api.prumolet.com/api/cart/${userId}/${productId}`
       );
       if (response.status === 200) {
         const updatedCart = cart.filter(
@@ -93,7 +93,7 @@ const Cart = () => {
         (item) => item.productId === productId
       );
 
-      await axios.put(`http://193.203.162.54:5000/api/cart/update/${userId}`, {
+      await axios.put(`https://api.prumolet.com/api/cart/update/${userId}`, {
         productId,
         quantity: updatedItem.quantity,
       });

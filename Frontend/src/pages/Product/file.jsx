@@ -10,7 +10,7 @@ const ProductDetail = () => {
   useEffect(() => {
     const fetchProductData = async () => {
       try {
-        const response = await axios.get(`http://193.203.162.54:5000/api/${id}`); // Your API endpoint here
+        const response = await axios.get(`https://api.prumolet.com/api/${id}`); // Your API endpoint here
         setProduct(response.data); // Set the fetched product data
         setLoading(false); // Set loading to false when data is fetched
       } catch (error) {

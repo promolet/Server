@@ -12,7 +12,7 @@ const Login = () => {
       e.preventDefault();
   
       try {
-        const response = await axios.post("http://193.203.162.54:5000/api/login", {
+        const response = await axios.post("https://api.prumolet.com/api/login", {
           email,
           password,
          

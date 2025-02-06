@@ -35,7 +35,7 @@ const Profile = () => {
       try {
         const userId = localStorage.getItem("userId");
         const response = await axios.get(
-          `http://193.203.162.54:5000/api/user/${userId}`
+          `https://api.prumolet.com/api/user/${userId}`
         );
         setUser(response.data);
       } catch (err) {
@@ -54,7 +54,7 @@ const Profile = () => {
       try {
         const userId = localStorage.getItem("userId");
         const ordersResponse = await axios.get(
-          `http://193.203.162.54:5000/api/orders/${userId}`
+          `https://api.prumolet.com/api/orders/${userId}`
         );
         setOrders(ordersResponse.data.orders);
         setTotalAmount(ordersResponse.data.totalAmount);
@@ -75,7 +75,7 @@ const Profile = () => {
       try {
         const userId = localStorage.getItem("userId");
         const response = await fetch(
-          `http://193.203.162.54:5000/api/addresses/${userId}`
+          `https://api.prumolet.com/api/addresses/${userId}`
         );
         const data = await response.json();
 
@@ -100,7 +100,7 @@ const Profile = () => {
     try {
       const userId = localStorage.getItem("userId");
       const response = await axios.delete(
-        `http://193.203.162.54:5000/api/addresses/${userId}/${addressId}`
+        `https://api.prumolet.com/api/addresses/${userId}/${addressId}`
       );
       console.log(response.data.message);
 

@@ -12,7 +12,7 @@ const CourseDetail = () => {
   useEffect(() => {
     const fetchProductData = async () => {
       try {
-        const response = await axios.get(`http://193.203.162.54:5000/courses/${id}`);
+        const response = await axios.get(`https://api.prumolet.com/courses/${id}`);
         setProduct(response.data);
         setLoading(false);
 
@@ -20,7 +20,7 @@ const CourseDetail = () => {
         const userId = localStorage.getItem("userId");
         if (userId) {
           const purchaseResponse = await axios.get(
-            `http://193.203.162.54:5000/api/course/purchase-status?userId=${userId}&courseId=${id}`
+            `https://api.prumolet.com/api/course/purchase-status?userId=${userId}&courseId=${id}`
           );
           setPurchased(purchaseResponse.data.purchased);
         }
@@ -35,7 +35,7 @@ const CourseDetail = () => {
   const handleBuyNow = async () => {
     const userId = localStorage.getItem("userId");
     try {
-      const response = await axios.post("http://193.203.162.54:5000/create-order", {
+      const response = await axios.post("https://api.prumolet.com/create-order", {
         amount: product.price * 100,
         currency: "INR",
         receipt: `order_rcptid_${product._id}`,
@@ -50,7 +50,7 @@ const CourseDetail = () => {
         description: "Purchase Course",
         order_id: order_id,
         handler: async function (response) {
-          await axios.post("http://193.203.162.54:5000/api/course/data", {
+          await axios.post("https://api.prumolet.com/api/course/data", {
             courseId: product._id,
             userId: userId,
             paymentId: response.razorpay_payment_id,
@@ -96,7 +96,7 @@ const CourseDetail = () => {
                 className="course-video"
                 width="100%"
                 height="315"
-                src={`http://193.203.162.54:5000${product.videos[0]}`}
+                src={`https://api.prumolet.com${product.videos[0]}`}
                 title="Course Video"
                 frameBorder="0"
                 allowFullScreen
@@ -127,7 +127,7 @@ const CourseDetail = () => {
                       className="bonus-video"
                       width="100%"
                       height="200"
-                      src={`http://193.203.162.54:5000${video}`}
+                      src={`https://api.prumolet.com${video}`}
                       frameBorder="0"
                       allowFullScreen
                     ></iframe>

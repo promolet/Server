@@ -32,7 +32,7 @@ const Shop = () => {
     try {
       const categoryQuery = selectedCategories.join(",");
       const response = await fetch(
-        `http://193.203.162.54:5000/api/filter?categories=${categoryQuery}&minPrice=${range[0]}&maxPrice=${range[1]}`
+        `https://api.prumolet.com/api/filter?categories=${categoryQuery}&minPrice=${range[0]}&maxPrice=${range[1]}`
       );
       const data = await response.json();
       setProducts(data);
