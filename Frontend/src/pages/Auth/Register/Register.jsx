@@ -20,7 +20,7 @@ const Register = () => {
         e.preventDefault();
     
         try {
-          const response = await axios.post("http://193.203.162.54:5500/api/create-account", formData);
+          const response = await axios.post("http://193.203.162.54:5000/api/create-account", formData);
           setMessage(response.data.message); // Success message
           setFormData({ fname: "", lname: "", email: "", password: "" }); // Reset form
         } catch (error) {

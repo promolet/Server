@@ -13,7 +13,7 @@ const ProductDetail = () => {
   const handleAddToCart = async () => {
     try {
       const userId = localStorage.getItem("userId");
-      const response = await axios.post("http://193.203.162.54:5500/api/cart/add", {
+      const response = await axios.post("http://193.203.162.54:5000/api/cart/add", {
         userId,
         productId: product._id,
         quantity: 1,
@@ -32,7 +32,7 @@ const ProductDetail = () => {
     try {
       const userId = localStorage.getItem("userId");
       const response = await axios.post(
-        "http://193.203.162.54:5500/api/wishlist/add",
+        "http://193.203.162.54:5000/api/wishlist/add",
         {
           userId,
           productId: product._id,
@@ -58,7 +58,7 @@ const ProductDetail = () => {
   useEffect(() => {
     const fetchProductData = async () => {
       try {
-        const response = await axios.get(`http://193.203.162.54:5500/api/product/${id}`); // Your API endpoint here
+        const response = await axios.get(`http://193.203.162.54:5000/api/product/${id}`); // Your API endpoint here
         setProduct(response.data); // Set the fetched product data
         setLoading(false); // Set loading to false when data is fetched
       } catch (error) {
@@ -105,7 +105,7 @@ const ProductDetail = () => {
     {product.images && product.images.length > 0 ? (
       <div>
         <img
-          src={`http://193.203.162.54:5500/${product.images[0]}`}
+          src={`http://193.203.162.54:5000/${product.images[0]}`}
           alt={product.title}
           className="w-100 img-fluid lazyload"
         />
@@ -121,7 +121,7 @@ const ProductDetail = () => {
           product.images.map((image, index) => (
             <div key={index}>
               <img
-                src={`http://193.203.162.54:5500/${image}`}
+                src={`http://193.203.162.54:5000/${image}`}
                 alt={`Image ${index + 1}`}
                 className="img-fluid lazyload"
               />

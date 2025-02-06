@@ -11,7 +11,7 @@ const Courses = () => {
     // Fetch courses from the backend
     const fetchCourses = async () => {
       try {
-        const response = await axios.get("http://193.203.162.54:5500/courses");
+        const response = await axios.get("http://193.203.162.54:5000/courses");
         setCourses(response.data);
       } catch (error) {
         console.error("Error fetching courses:", error);
@@ -44,7 +44,7 @@ const Courses = () => {
               {/* <Link to={`/course/${course._id}`} className="course-link"> */}
                 <div className="img-wrapper">
                   <img
-                     src={`http://193.203.162.54:5500${course.images}`}
+                     src={`http://193.203.162.54:5000${course.images}`}
                     className="w-100 img-fluid lazyload"
                     alt={course.title}
                   />

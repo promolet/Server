@@ -86,7 +86,7 @@ const Footer = () => {
                 <div className="footer-title">
                   <h4>Store Information</h4>
                   <ul className="contact-list">
-                    <li><i className="ri-map-pin-line"></i> 2nd Floor, H No 69, D No 5-2-430, beside Power Controls India, Hyderbasthi, Rani Gunj, Secunderabad, Telangana 550003</li>
+                    <li><i className="ri-map-pin-line"></i> 2nd Floor, H No 69, D No 5-2-430, beside Power Controls India, Hyderbasthi, Rani Gunj, Secunderabad, Telangana 500003</li>
                     <li><i className="ri-phone-line"></i> Call Us: +91 93918 89751</li>
                     <li><i className="ri-mail-line"></i> Email Us: support@prumolet.com</li>
                   </ul>

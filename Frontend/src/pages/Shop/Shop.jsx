@@ -32,7 +32,7 @@ const Shop = () => {
     try {
       const categoryQuery = selectedCategories.join(",");
       const response = await fetch(
-        `http://193.203.162.54:5500/api/filter?categories=${categoryQuery}&minPrice=${range[0]}&maxPrice=${range[1]}`
+        `http://193.203.162.54:5000/api/filter?categories=${categoryQuery}&minPrice=${range[0]}&maxPrice=${range[1]}`
       );
       const data = await response.json();
       setProducts(data);
@@ -49,7 +49,7 @@ const Shop = () => {
       connect: true,
       range: {
         min: 500,
-        max: 55000,
+        max: 50000,
       },
       step: 10,
     });

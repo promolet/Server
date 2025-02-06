@@ -12,7 +12,7 @@ const CartOffcanvas = () => {
       try {
         const userId = localStorage.getItem("userId");
         const response = await axios.get(
-          `http://193.203.162.54:5500/api/cart/${userId}`
+          `http://193.203.162.54:5000/api/cart/${userId}`
         );
         console.log("Cart response:", response.data);
 
@@ -41,7 +41,7 @@ const CartOffcanvas = () => {
       cartItems.map(async (item) => {
         try {
           const productResponse = await axios.get(
-            `http://193.203.162.54:5500/api/product/${item.productId}`
+            `http://193.203.162.54:5000/api/product/${item.productId}`
           );
           return { ...item, productDetails: productResponse.data };
         } catch (error) {
@@ -68,7 +68,7 @@ const CartOffcanvas = () => {
       console.log("Deleting product with ID:", productId);
 
       const response = await axios.delete(
-        `http://193.203.162.54:5500/api/cart/${userId}/${productId}`
+        `http://193.203.162.54:5000/api/cart/${userId}/${productId}`
       );
       if (response.status === 200) {
         const updatedCart = cart.filter(
@@ -101,7 +101,7 @@ const CartOffcanvas = () => {
 
       const updatedItem = updatedCart.find((item) => item.productId === productId);
 
-      await axios.put(`http://193.203.162.54:5500/api/cart/update/${userId}`, {
+      await axios.put(`http://193.203.162.54:5000/api/cart/update/${userId}`, {
         productId,
         quantity: updatedItem.quantity,
       });
@@ -166,7 +166,7 @@ const CartOffcanvas = () => {
                     <div className="media">
                       <Link to={`/product/${item.productId}`}>
                         <img
-                          src={`http://193.203.162.54:5500/${item.productDetails?.images[0]}`}
+                          src={`http://193.203.162.54:5000/${item.productDetails?.images[0]}`}
                           className="img-fluid"
                           alt={item.productDetails?.title}
                         />

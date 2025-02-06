@@ -12,7 +12,7 @@ const AcError = () => {
 
   useEffect(() => {
     // Fetch AC error data from backend
-    axios.get('http://193.203.162.54:5500/errorCode')
+    axios.get('http://193.203.162.54:5000/errorCode')
       .then(response => {
         setAcErrorData(response.data);
       })

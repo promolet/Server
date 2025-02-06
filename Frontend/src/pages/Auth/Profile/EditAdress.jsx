@@ -27,7 +27,7 @@ const EditAddressModal = ({ addressId, onClose, onSubmit }) => {
       const userId = localStorage.getItem('userId');
 
       const response = await axios.get(
-        `http://193.203.162.54:5500/api/addresses/${userId}/${id}`
+        `http://193.203.162.54:5000/api/addresses/${userId}/${id}`
       );
       
       if (response.data) {
@@ -68,7 +68,7 @@ const EditAddressModal = ({ addressId, onClose, onSubmit }) => {
     try {
       const userId = localStorage.getItem('userId');
       const response = await axios.put(
-        `http://193.203.162.54:5500/api/addresses/${userId}/${addressId}`,
+        `http://193.203.162.54:5000/api/addresses/${userId}/${addressId}`,
         formData
       );
 

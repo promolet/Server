@@ -35,7 +35,7 @@ const Profile = () => {
       try {
         const userId = localStorage.getItem("userId");
         const response = await axios.get(
-          `http://193.203.162.54:5500/api/user/${userId}`
+          `http://193.203.162.54:5000/api/user/${userId}`
         );
         setUser(response.data);
       } catch (err) {
@@ -54,7 +54,7 @@ const Profile = () => {
       try {
         const userId = localStorage.getItem("userId");
         const ordersResponse = await axios.get(
-          `http://193.203.162.54:5500/api/orders/${userId}`
+          `http://193.203.162.54:5000/api/orders/${userId}`
         );
         setOrders(ordersResponse.data.orders);
         setTotalAmount(ordersResponse.data.totalAmount);
@@ -75,7 +75,7 @@ const Profile = () => {
       try {
         const userId = localStorage.getItem("userId");
         const response = await fetch(
-          `http://193.203.162.54:5500/api/addresses/${userId}`
+          `http://193.203.162.54:5000/api/addresses/${userId}`
         );
         const data = await response.json();
 
@@ -100,7 +100,7 @@ const Profile = () => {
     try {
       const userId = localStorage.getItem("userId");
       const response = await axios.delete(
-        `http://193.203.162.54:5500/api/addresses/${userId}/${addressId}`
+        `http://193.203.162.54:5000/api/addresses/${userId}/${addressId}`
       );
       console.log(response.data.message);
 

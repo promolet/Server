@@ -11,7 +11,7 @@ const WishlistCanvas = ({product}) => {
       try {
         const userId = localStorage.getItem("userId");
         const response = await axios.get(
-          `http://193.203.162.54:5500/api/wishlist/${userId}`
+          `http://193.203.162.54:5000/api/wishlist/${userId}`
         );
 
         console.log("Wishlist response:", response.data); // Debug log
@@ -35,7 +35,7 @@ const WishlistCanvas = ({product}) => {
     for (const item of products) {
       try {
         const productResponse = await axios.get(
-          `http://193.203.162.54:5500/api/product/${item.productId}`
+          `http://193.203.162.54:5000/api/product/${item.productId}`
         );
         updatedProducts.push({
           ...item,
@@ -63,7 +63,7 @@ const WishlistCanvas = ({product}) => {
   const removeFromWishlist = async (productId) => {
     try {
       const userId = localStorage.getItem("userId");
-      await axios.delete(`http://193.203.162.54:5500/api/wishlist/${userId}/${productId}`);
+      await axios.delete(`http://193.203.162.54:5000/api/wishlist/${userId}/${productId}`);
       
       const updatedWishlist = wishlist.filter((item) => item.productId !== productId);
       setWishlist(updatedWishlist);
@@ -80,7 +80,7 @@ const addToCart = async (productId) => {
     const userId = localStorage.getItem("userId");
 
     // Ensure we are sending the correct product ID and quantity (default to 1)
-    const response = await axios.post("http://193.203.162.54:5500/api/cart/add", {
+    const response = await axios.post("http://193.203.162.54:5000/api/cart/add", {
       userId : userId,
       productId : productId,   // Include productId in the request body
       quantity: 1,  // Default quantity to 1
@@ -135,7 +135,7 @@ const addToCart = async (productId) => {
                       <td>
                         <a href={`/product/${item.productId}`}>
                           <img
-                            src={`http://193.203.162.54:5500/${item.productDetails?.images[0]}`}
+                            src={`http://193.203.162.54:5000/${item.productDetails?.images[0]}`}
                             className="img-fluid"
                             alt={item.productDetails?.title}
                           />

@@ -23,7 +23,7 @@ const AddAddress = ({ userId, onAddressAdded }) => {
   // Delete address
   const handleDeleteAddress = () => {
     axios
-      .delete(`http://193.203.162.54:5500/api/addresses/${selectedAddress._id}`)
+      .delete(`http://193.203.162.54:5000/api/addresses/${selectedAddress._id}`)
       .then(() => {
         setAddresses((prevAddresses) =>
           prevAddresses.filter((address) => address._id !== selectedAddress._id)
@@ -48,7 +48,7 @@ const AddAddress = ({ userId, onAddressAdded }) => {
 
     try {
       const userId = localStorage.getItem("userId");
-      const response = await axios.post("http://193.203.162.54:5500/api/addresses", {
+      const response = await axios.post("http://193.203.162.54:5000/api/addresses", {
         userId,
         ...formData,
       });

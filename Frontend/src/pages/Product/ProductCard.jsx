@@ -18,7 +18,7 @@ const ProductCard = ({ product }) => {
   const handleAddToCart = async () => {
     try {
       const userId = localStorage.getItem("userId");
-      await axios.post("http://193.203.162.54:5500/api/cart/add", {
+      await axios.post("http://193.203.162.54:5000/api/cart/add", {
         userId,
         productId: product._id,
         quantity: 1,
@@ -34,7 +34,7 @@ const ProductCard = ({ product }) => {
   const handleAddToWishlist = async () => {
     try {
       const userId = localStorage.getItem("userId");
-      await axios.post("http://193.203.162.54:5500/api/wishlist/add", {
+      await axios.post("http://193.203.162.54:5000/api/wishlist/add", {
         userId,
         productId: product._id,
         quantity: 1,
@@ -54,7 +54,7 @@ const ProductCard = ({ product }) => {
           <div className="img-wrapper">
             <Link to={`/product/${product._id}`}>
               <img
-                src={`http://193.203.162.54:5500/${product.images[0]}`}
+                src={`http://193.203.162.54:5000/${product.images[0]}`}
                 className="w-100 img-fluid   lazyload"
                 alt={product.title}
               />
