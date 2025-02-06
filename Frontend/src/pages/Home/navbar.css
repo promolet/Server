@@ -1,0 +1,32 @@
+/* Add this CSS to handle the toggle effect for showing the menu on mobile */
+@media (max-width: 768px) {
+    #main-menu {
+      display: none;
+      position: absolute;
+      top: 0;
+      right: 0;
+      background-color: white;
+      height: 100vh;
+      width: 250px;
+      box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+      padding-top: 60px;
+      transition: transform 0.3s ease;
+    }
+  
+    #main-menu.show {
+      display: block;
+    }
+  
+    #main-nav .toggle-nav {
+      display: block;
+      font-size: 30px;
+      cursor: pointer;
+      z-index: 200;
+    }
+  
+    .ri-close-line {
+      font-size: 30px;
+    
+    }
+  }
+  

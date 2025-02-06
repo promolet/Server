@@ -1,0 +1,42 @@
+/* Center-align the entire content */
+.max-w-4xl {
+    max-width: 64rem;
+    margin: 0 auto;
+    padding: 1.5rem;
+    text-align: left;
+}
+
+/* Left-align sections from "Why Choose Us" to "Our Mission" */
+.text-left {
+    text-align: left;
+}
+
+/* Adjust heading sizes and spacing */
+.text-3xl {
+    font-size: 1.875rem; /* 30px */
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.text-2xl {
+    font-size: 1.5rem; /* 24px */
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.text-xl {
+    font-size: 1.25rem; /* 20px */
+    font-weight: 600;
+    margin-top: 1rem;
+}
+
+/* Paragraph and list styling */
+.mb-4, .mb-6 {
+    margin-bottom: 1.5rem;
+}
+
+.list-disc {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+}
