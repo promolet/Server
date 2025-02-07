@@ -9,7 +9,6 @@ const ProductCard = ({ product }) => {
 
   // Local offers and price logic
   const offers = [
-    "Buy 1 Get 1 Free",
     "10% Cashback on UPI Payments",
     "Flat ₹100 Off on Orders Above ₹500",
   ];

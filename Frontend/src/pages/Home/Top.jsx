@@ -24,7 +24,7 @@ const Top = () => {
             <div className="col-lg-6 text-end">
               <ul className="header-dropdown">
                 <li className="mobile-wishlist" data-bs-toggle="offcanvas" data-bs-target="#wishlistOffcanvas">
-                  <a href="#!"><i className="ri-heart-fill"></i></a>
+                  <i className="ri-heart-fill"></i>
                 </li>
 
                 {user ? (

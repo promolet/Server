@@ -75,22 +75,22 @@ const Navbar = () => {
                       className={`sm pixelstrap sm-horizontal ${menuOpen ? 'show' : ''}`}
                     >
                       <li>
-                        <Link to='/'>Home</Link>
+                        <Link to='/' onClick={() => setMenuOpen(false)}>Home</Link>
                       </li>
                       <li>
-                        <Link to="/Shop">Shop</Link>
+                        <Link to="/Shop" onClick={() => setMenuOpen(false)}>Shop</Link>
                       </li>
                       <li>
-                        <Link to="/courses">Courses</Link>
+                        <Link to="/courses" onClick={() => setMenuOpen(false)}>Courses</Link>
                       </li>
                       <li>
-                        <Link to='/services'>Services</Link>
+                        <Link to='/services' onClick={() => setMenuOpen(false)}>Services</Link>
                       </li>
                       <li>
-                        <Link to="/acerror">AC ERROR CODE</Link>
+                        <Link to="/acerror" onClick={() => setMenuOpen(false)}>AC ERROR CODE</Link>
                       </li>
                       <li>
-                        <Link to='/contact'>Contact Us</Link>
+                        <Link to='/contact' onClick={() => setMenuOpen(false)}>Contact Us</Link>
                       </li>
                     </ul>
                   </nav>

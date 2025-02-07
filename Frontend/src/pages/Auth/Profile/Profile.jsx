@@ -221,7 +221,6 @@ const Profile = () => {
               </div>
             </div>
             <div class="col-lg-9">
-              <button class="show-btn btn d-lg-none d-block">Show Menu</button>
               <div class="faq-content tab-content" id="myTabContent">
                 <div
                   class="tab-pane fade show active"
