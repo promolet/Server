@@ -1,0 +1,27 @@
+.order {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .order h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .order-detail {
+    margin-bottom: 15px;
+  }
+  
+  .order-detail ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+  .order-detail li {
+    margin-bottom: 5px;
+  }
+  .email-cell {
+    text-transform: none; /* Ensures the email is displayed as is, without capitalization */
+  }
+  

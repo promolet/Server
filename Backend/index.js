@@ -1694,6 +1694,15 @@ const transporter = nodemailer.createTransport({
     pass: process.env.app_pass, // Your email password or app-specific password
   },
 });
+app.delete('/api/errorcode/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    await ErrorCode.findByIdAndDelete(id);
+    res.json({ message: "Error code deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Error deleting error code", error });
+  }
+});
 app.get("/", async (req, res) => {
  console.log("server is running")
 });

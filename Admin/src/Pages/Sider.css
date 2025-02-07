@@ -1,0 +1,47 @@
+.dashboard-sidebar {
+    width: 250px;
+    background-color: #fff;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .dashboard-sidebar.active {
+    transform: translateX(0);
+  }
+  
+  .sidebar-content {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .hamburger {
+    display: none;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 24px;
+  }
+  
+  .hamburger i {
+    color: #000;
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .dashboard-sidebar {
+      transform: translateX(-250px);
+      position: fixed;
+      height: 100%;
+      z-index: 999;
+    }
+  
+    .dashboard-sidebar.active {
+      transform: translateX(0);
+    }
+  
+    .hamburger {
+      display: block;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+    }
+  }
+  
