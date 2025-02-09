@@ -142,7 +142,7 @@ const Billingpage = () => {
 
       // Create Razorpay order
       const orderResponse = await axios.post(
-        "https://api.prumolet.com/api/orders/createRazorpayOrder",
+        "http://localhost:5000/api/orders/createRazorpayOrder",
         { amount: orderData.totalAmount, currency: "INR" }
       );
 

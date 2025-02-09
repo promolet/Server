@@ -147,6 +147,9 @@ mongoose
     }
   });
   // Sample Route
+
+
+  
 app.get('/', (req, res) => {
   res.send('Welc to the Express & MongoDB app!');
 });
@@ -1108,13 +1111,21 @@ app.get('/api/orders/recent', async (req, res) => {
     res.status(500).json({ message: 'Error fetching recent order.', error: err.message });
   }
 });
+const razorpay = new Razorpay({
+  key_id: process.env.Razorpay_keyid,
+  key_secret: process.env.Razorpay_keysecret,
+});
 app.post("/api/orders/createRazorpayOrder", async (req, res) => {
   try {
     const { amount, currency } = req.body;
 
+    if (!amount || amount <= 0 || !currency) {
+      return res.status(400).json({ message: "Invalid amount or currency" });
+    }
+
     const options = {
-      amount: amount * 100, // Razorpay accepts amount in paise
-      currency: currency,
+      amount: amount * 100, 
+      currency,
       receipt: `order_rcpt_${Date.now()}`,
     };
 
