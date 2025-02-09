@@ -414,7 +414,7 @@ const Profile = () => {
                     <p>
                       {address.city}, {address.state}
                     </p>
-                    <p>{address.pinCode}</p>
+                    <p>{address.pincode}</p>
                   </div>
                   <div className="number">
                     <p>

@@ -9,7 +9,7 @@ const EditAddressModal = ({ addressId, onClose, onSubmit }) => {
     country: '',
     state: '',
     city: '',
-    pinCode: '',
+    pincode: '',
   });
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
@@ -51,7 +51,7 @@ const EditAddressModal = ({ addressId, onClose, onSubmit }) => {
         country: address.country || '',
         state: address.state || '',
         city: address.city || '',
-        pinCode: address.pinCode || '',
+        pincode: address.pincode || '',
       });
     }
   }, [address]);
@@ -234,13 +234,13 @@ const EditAddressModal = ({ addressId, onClose, onSubmit }) => {
               {/* Pin Code */}
               <div className="col-6">
                 <div className="form-box">
-                  <label htmlFor="pinCode" className="form-label">Pin Code</label>
+                  <label htmlFor="pincode" className="form-label">Pin Code</label>
                   <input
                     type="text"
                     className="form-control"
-                    id="pinCode"
-                    name="pinCode"
-                    value={formData.pinCode}
+                    id="pincode"
+                    name="pincode"
+                    value={formData.pincode}
                     onChange={handleChange}
                     placeholder="Enter Pin Code"
                   />

@@ -777,7 +777,7 @@ app.post("/api/admin/login", async (req, res) => {
 });
 app.post('/api/addresses', async (req, res) => {
   try {
-    const { userId, title, address, phoneNumber, country, state, city, pinCode } = req.body;
+    const { userId, title, address, phoneNumber, country, state, city, pincode } = req.body;
 
     // Find the user by userId (you can change this logic based on your actual User model)
     const userAddress = await Address.findOne({ userId });
@@ -794,7 +794,7 @@ app.post('/api/addresses', async (req, res) => {
             country,
             state,
             city,
-            pinCode,
+            pincode,
           },
         ],
       });
@@ -811,7 +811,7 @@ app.post('/api/addresses', async (req, res) => {
       country,
       state,
       city,
-      pinCode,
+      pincode,
     });
 
     await userAddress.save();

@@ -9,7 +9,7 @@ const AddAddress = ({ userId, onAddressAdded }) => {
     country: '',
     state: '',
     city: '',
-    pinCode: '',
+    pincode: '',
   });
 
   const [errorMessage, setErrorMessage] = useState('');
@@ -42,7 +42,7 @@ const AddAddress = ({ userId, onAddressAdded }) => {
       country: document.getElementById("input-state-06").value,
       state: document.getElementById("input-state-0").value,
       city: document.getElementById("city2").value,
-      pinCode: document.getElementById("pincode2").value,
+      pincode: document.getElementById("pincode2").value,
     };
 
     axios
@@ -105,7 +105,7 @@ const AddAddress = ({ userId, onAddressAdded }) => {
         country: '',
         state: '',
         city: '',
-        pinCode: '',
+        pincode: '',
       });
       setErrorMessage('');
     } catch (error) {
@@ -247,15 +247,15 @@ const AddAddress = ({ userId, onAddressAdded }) => {
                 </div>
                 <div className="col-6">
                   <div className="form-box">
-                    <label htmlFor="pin" className="form-label">PinCode</label>
+                    <label htmlFor="pin" className="form-label">pincode</label>
                     <input
                       type="number"
                       className="form-control"
                       id="pin"
-                      name="pinCode"
-                      value={formData.pinCode}
+                      name="pincode"
+                      value={formData.pincode}
                       onChange={handleChange}
-                      placeholder="Enter PinCode"
+                      placeholder="Enter pincode"
                     />
                   </div>
                 </div>
@@ -298,7 +298,7 @@ const AddAddress = ({ userId, onAddressAdded }) => {
             {addresses.map((address, index) => (
               <li key={index}>
                 <h5>{address.title}</h5>
-                <p>{address.address}, {address.city}, {address.state}, {address.country}, {address.pinCode}</p>
+                <p>{address.address}, {address.city}, {address.state}, {address.country}, {address.pincode}</p>
               </li>
             ))}
           </ul>

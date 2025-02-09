@@ -55,7 +55,7 @@ const Billingpage = () => {
       const selectedNumber = addressResponse.data.phoneNumber;
       const selectedState = addressResponse.data.state;
       const selectedCountry = addressResponse.data.country;
-      const selectedPincode = addressResponse.data.pinCode;
+      const selectedpincode = addressResponse.data.pincode;
       const selectedCity = addressResponse.data.city; // Add city field
   
       if (!selectedAddress) {
@@ -71,7 +71,7 @@ const Billingpage = () => {
         phoneNumber : selectedNumber,
         state: selectedState,
         country: selectedCountry,
-        pincode: selectedPincode,
+        pincode: selectedpincode,
         city: selectedCity, // Include city in order data
         paymentOption: selectedPaymentOption,
         product:
@@ -124,7 +124,7 @@ const Billingpage = () => {
       const selectedNumber = addressResponse.data.phoneNumber;
       const selectedState = addressResponse.data.state;
       const selectedCountry = addressResponse.data.country;
-      const selectedPincode = addressResponse.data.pincode;
+      const selectedpincode = addressResponse.data.pincode;
       const selectedCity = addressResponse.data.city; // Add city field
   
       if (!selectedAddress) {
@@ -140,7 +140,7 @@ const Billingpage = () => {
         phoneNumber : selectedNumber,
         state: selectedState,
         country: selectedCountry,
-        pincode: selectedPincode,
+        pincode: selectedpincode,
         city: selectedCity, // Include city in order data
         product: product
           ? [
@@ -437,7 +437,7 @@ const Billingpage = () => {
           <span className="text-title">
             Pin Code:
           </span>
-          {address.pinCode} {/* Ensure pinCode is a string or number */}
+          {address.pincode} {/* Ensure pincode is a string or number */}
         </span>
         <span className="address text-content">
           <span className="text-title">

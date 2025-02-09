@@ -9,7 +9,7 @@ const AddAddress = ({ userId, onAddressAdded }) => {
     country: "",
     state: "",
     city: "",
-    pinCode: "",
+    pincode: "",
   });
 
   const [errorMessage, setErrorMessage] = useState("");
@@ -64,7 +64,7 @@ const AddAddress = ({ userId, onAddressAdded }) => {
         country: "",
         state: "",
         city: "",
-        pinCode: "",
+        pincode: "",
       });
       setErrorMessage("");
   
@@ -226,16 +226,16 @@ const AddAddress = ({ userId, onAddressAdded }) => {
                 <div className="col-6">
                   <div className="form-box">
                     <label htmlFor="pin" className="form-label">
-                      PinCode
+                      pincode
                     </label>
                     <input
                       type="number"
                       className="form-control"
                       id="pin"
-                      name="pinCode"
-                      value={formData.pinCode}
+                      name="pincode"
+                      value={formData.pincode}
                       onChange={handleChange}
-                      placeholder="Enter PinCode"
+                      placeholder="Enter pincode"
                     />
                   </div>
                 </div>

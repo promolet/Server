@@ -427,7 +427,7 @@ const totalAmount = location.state?.type === "single"
                                         <span class="text-title">
                                           Pin Code :
                                         </span>
-                                        {address.pinCode}
+                                        {address.pincode}
                                       </span>
                                       <span class="address text-content">
                                         <span class="text-title">Phone :</span>{" "}
