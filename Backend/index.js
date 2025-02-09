@@ -1688,6 +1688,27 @@ app.post("/api/course/data", async (req, res) => {
     res.status(500).json({ error: "Failed to save order" });
   }
 });
+app.put("/courses/:id", async (req, res) => {
+  try {
+    const updatedCourse = await Course.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!updatedCourse) return res.status(404).json({ message: "Course not found" });
+    res.json({ message: "Course updated successfully", course: updatedCourse });
+  } catch (error) {
+    res.status(500).json({ message: "Error updating course", error });
+  }
+});
+
+// Delete a course
+app.delete("/courses/:id", async (req, res) => {
+  try {
+    const deletedCourse = await Course.findByIdAndDelete(req.params.id);
+    if (!deletedCourse) return res.status(404).json({ message: "Course not found" });
+    res.json({ message: "Course deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Error deleting course", error });
+  }
+});
+
 app.get("/api/orders/:userId", async (req, res) => {
   try {
     const { userId } = req.params;

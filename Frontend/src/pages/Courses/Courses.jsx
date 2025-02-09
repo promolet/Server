@@ -23,60 +23,67 @@ const Courses = () => {
 
   return (
     <>
-    <div class="breadcrumb-section">
-        <div class="container">
-            <h2>Courses</h2>
-            <nav class="theme-breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                        <a href="/">Home</a>
-                    </li>
-                    <li class="breadcrumb-item active">Courses</li>
-                </ol>
-            </nav>
+      <div className="breadcrumb-section">
+        <div className="container">
+          <h2>Courses</h2>
+          <nav className="theme-breadcrumb">
+            <ol className="breadcrumb">
+              <li className="breadcrumb-item">
+                <a href="/">Home</a>
+              </li>
+              <li className="breadcrumb-item active">Courses</li>
+            </ol>
+          </nav>
         </div>
-    </div>
-    <div className="row">
-      {courses.map((course) => (
-        <div className="col-xl-4 col-6 col-grid-box" key={course._id}>
-          <div className="basic-product theme-product-1 position-relative">
-            <div className="overflow-hidden">
-              {/* <Link to={`/course/${course._id}`} className="course-link"> */}
-                <div className="img-wrapper">
-                  <img
-                     src={`https://api.prumolet.com${course.images}`}
-                    className="w-100 img-fluid lazyload"
-                    alt={course.title}
-                  />
-                  <div className="rating-label">
-                    <i className="ri-star-fill"></i>
-                    <span>{course.rating || "No rating"}</span>
+      </div>
+
+      <div className="row">
+        {courses.map((course) => {
+          const originalPrice = (course.price / 0.7).toFixed(2); // Assuming 30% off
+
+          return (
+            <div className="col-xl-4 col-6 col-grid-box" key={course._id}>
+              <div className="basic-product theme-product-1 position-relative">
+                <div className="overflow-hidden">
+                  <div className="img-wrapper">
+                    {/* <Link to={`/course/${course._id}`}> */}
+                      <img
+                        src={`https://api.prumolet.com${course.images}`}
+                        className="w-100 img-fluid lazyload"
+                        alt={course.title}
+                      />
+                    {/* </Link> */}
+                  </div>
+                  <div className="product-detail">
+                    <div>
+                      {/* <Link className="product-title" to={`/course/${course._id}`}> */}
+                        {course.title}
+                      {/* </Link> */}
+                      <h6>{course.description}</h6>
+                      <h4 className="price">
+                        ₹{course.price.toFixed(2)}
+                        <del> ₹{originalPrice}</del>
+                        <span className="discounted-price">30% Off</span>
+                      </h4>
+                    </div>
+                    <ul className="offer-panel">
+                      {course.offers &&
+                        course.offers.map((offer, index) => (
+                          <li key={index}>
+                            <span className="offer-icon">
+                              <i className="ri-discount-percent-fill"></i>
+                            </span>
+                            {offer}
+                          </li>
+                        ))}
+                    </ul>
                   </div>
                 </div>
-                <div className="product-detail">
-                  <div>
-                    <p className="product-title">{course.title}</p>
-                    <h6>{course.description}</h6>
-                    <h4 className="price">₹{course.price}</h4>
-                  </div>
-                  <ul className="offer-panel">
-                    {course.offers &&
-                      course.offers.map((offer, index) => (
-                        <li key={index}>
-                          <span className="offer-icon">
-                            <i className="ri-discount-percent-fill"></i>
-                          </span>
-                          {offer}
-                        </li>
-                      ))}
-                  </ul>
-                </div>
-              {/* </Link> */}
+              </div>
             </div>
-          </div>
-        </div>
-      ))}
-    </div>
+          );
+        })}
+      </div>
     </>
   );
 };

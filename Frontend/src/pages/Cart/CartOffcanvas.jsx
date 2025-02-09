@@ -228,9 +228,7 @@ const CartOffcanvas = () => {
                 </li>
                 <li>
                   <div className="buttons">
-                    <Link to="/cart" className="btn view-cart">
-                      View Cart
-                    </Link>
+                   
                     <Link
                       to="/billing"
                       className="btn checkout"

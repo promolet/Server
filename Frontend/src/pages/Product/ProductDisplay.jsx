@@ -189,16 +189,7 @@ const ProductDetail = () => {
                                     
                                 </div>
 
-                                <div class="size-delivery-info flex-wrap">
-                                    <a href="#return" data-bs-toggle="modal" class=""><i class="ri-truck-line"></i>
-                                        Delivery &amp; Return </a>
-
-                                    <a href="#ask-question" class="" data-bs-toggle="modal"><i
-                                            class="ri-questionnaire-line"></i>
-                                        Ask a Question </a>
-
-                                </div>
-
+                               
 
                                 <div class="accordion accordion-flush product-accordion" id="accordionFlushExample">
                                     <div class="accordion-item">

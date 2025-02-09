@@ -140,9 +140,8 @@ const Billingpage = () => {
         totalAmount: totalAmount,
       };
 
-      // Create Razorpay order
       const orderResponse = await axios.post(
-        "http://localhost:5000/api/orders/createRazorpayOrder",
+        "https://api.prumolet.com/api/orders/createRazorpayOrder",
         { amount: orderData.totalAmount, currency: "INR" }
       );
 
@@ -585,25 +584,7 @@ const Billingpage = () => {
                                   ₹{product?.price.toFixed(2)}
                                 </span>
                               </li>
-                              <li>
-                                <h4>Wallet Balance</h4>
-                                <h4 className="price">
-                                  ₹{walletBalance.toFixed(2)}
-                                </h4>
-                              </li>
-                              <li className="border-cls">
-                                <label
-                                  for="wallet"
-                                  className="form-check-label m-0"
-                                >
-                                  Would you prefer to pay using wallet?
-                                </label>
-                                <input
-                                  type="checkbox"
-                                  id="wallet"
-                                  className="checkbox_animated check-it"
-                                />
-                              </li>
+                             
                             </ul>
                           ) : (
                             // Cart view with shipping, tax, etc.
@@ -645,12 +626,7 @@ const Billingpage = () => {
                                   className="checkbox_animated check-it"
                                 />
                               </li>
-                              <li>
-                                <h4>Wallet Balance</h4>
-                                <h4 className="price">
-                                  ₹{walletBalance.toFixed(2)}
-                                </h4>
-                              </li>
+                             
                               <li className="border-cls">
                                 <label
                                   for="wallet"

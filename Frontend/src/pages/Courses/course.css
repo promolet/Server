@@ -29,4 +29,38 @@
       transform: translateX(-100%);
     }
   }
+  .price {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+  }
+  
+  .price del {
+    color: #999;
+    margin-right: 5px;
+  }
+  
+  .discounted-price {
+    color: #d9534f; /* Red for discount label */
+    font-weight: 600;
+    margin-left: 5px;
+  }
+  
+  .offer-panel {
+    margin-top: 10px;
+    padding: 0;
+    list-style: none;
+  }
+  
+  .offer-panel li {
+    font-size: 0.9rem;
+    color: #555;
+    display: flex;
+    align-items: center;
+  }
+  
+  .offer-icon {
+    color: #ff9800;
+    margin-right: 5px;
+  }
   
