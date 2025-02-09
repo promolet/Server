@@ -134,11 +134,7 @@ const CartOffcanvas = () => {
       </div>
       <div className="offcanvas-body">
         <div className="pre-text-box">
-          <p>
-            {subtotal >= 20.96
-              ? "You are eligible for free shipping!"
-              : `Spend ₹${(20.96 - subtotal).toFixed(2)} more and enjoy free shipping!`}
-          </p>
+          
           <div
             className="progress"
             role="progressbar"
