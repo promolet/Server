@@ -72,7 +72,7 @@ const Orders = () => {
         Order_ID: order.orderId || 'N/A',
         User_Name: order.user.name || 'N/A',
         Email: order.user.email || 'N/A',
-        Address: `${detail.address || 'N/A'}, ${detail.city || 'N/A'}, ${detail.state || 'N/A'}, ${detail.country || 'N/A'}, ${detail.title},${detail.phoneNumber}`,
+        Address: `${detail.address || 'N/A'}, ${detail.city || 'N/A'}, ${detail.state || 'N/A'}, ${detail.country || 'N/A'}, ${detail.title},${detail.Number}`,
         Payment_Option: detail.paymentOption || 'N/A',
         Products: detail.products.map((p) => `${p.title} (Qty: ${p.quantity})`).join(', '),
         Total_Amount: `₹${detail.totalAmount || 'N/A'}`,

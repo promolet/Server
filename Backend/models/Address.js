@@ -5,7 +5,6 @@ const addressSchema = new mongoose.Schema(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId, // Assuming you have a User model
-      required: true,
     },
     details: [
       {
