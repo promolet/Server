@@ -47,48 +47,59 @@ const Billingpage = () => {
   };
   const handlePlaceOrder = async () => {
     const userId = localStorage.getItem("userId");
-    const addressResponse = await axios.get(
-      `https://api.prumolet.com/api/addresses/${userId}/${selectedAddressId}`
-    );
-    const selectedAddress = addressResponse.data.address;
-
-    if (!selectedAddress) {
-      alert("Selected address not found!");
-      return;
-    }
-
-    const orderData = {
-      userId: localStorage.getItem("userId"),
-      addressId: selectedAddressId,
-      address: selectedAddress,
-      paymentOption: selectedPaymentOption, // Ensure this is either 'standard' or 'express'
-      product:
-        location.state?.type === "single"
-          ? [
-              {
-                productId: product._id,
-                productName: product.title,
-                quantity: 1,
-              },
-            ]
-          : cart.map((item) => ({
-              productId: item.productId, // Ensure this is set for each cart item
-              productName: item.productDetails?.title, // Assuming `productName` is available in the cart item
-              quantity: item.quantity,
-            })),
-      cartTotal: cartTotal,
-      shippingCost: shippingCost,
-      taxAmount: taxAmount,
-      totalAmount: totalAmount,
-      pointsBalance: pointsBalance,
-      walletBalance: walletBalance,
-    };
-
+  
     try {
+      const addressResponse = await axios.get(
+        `https://api.prumolet.com/api/addresses/${userId}/${selectedAddressId}`
+      );
+  
+      const selectedAddress = addressResponse.data.address;
+      const selectedState = addressResponse.data.state;
+      const selectedCountry = addressResponse.data.country;
+      const selectedPincode = addressResponse.data.pincode;
+      const selectedCity = addressResponse.data.city; // Add city field
+  
+      if (!selectedAddress) {
+        alert("Selected address not found!");
+        return;
+      }
+  
+      const orderData = {
+        userId,
+        addressId: selectedAddressId,
+        address: selectedAddress,
+        state: selectedState,
+        country: selectedCountry,
+        pincode: selectedPincode,
+        city: selectedCity, // Include city in order data
+        paymentOption: selectedPaymentOption,
+        product:
+          location.state?.type === "single"
+            ? [
+                {
+                  productId: product._id,
+                  productName: product.title,
+                  quantity: 1,
+                },
+              ]
+            : cart.map((item) => ({
+                productId: item.productId,
+                productName: item.productDetails?.title,
+                quantity: item.quantity,
+              })),
+        cartTotal,
+        shippingCost,
+        taxAmount,
+        totalAmount,
+        pointsBalance,
+        walletBalance,
+      };
+  
       const response = await axios.post(
         "https://api.prumolet.com/api/orders/placeOrder",
         orderData
       );
+  
       if (response.data.success) {
         window.location.href = "/orderConformation";
       } else {
@@ -101,24 +112,31 @@ const Billingpage = () => {
   };
   const handleRazorpayPayment = async () => {
     const userId = localStorage.getItem("userId");
-
+  
     try {
-      // Fetch the selected address details
       const addressResponse = await axios.get(
         `https://api.prumolet.com/api/addresses/${userId}/${selectedAddressId}`
       );
+  
       const selectedAddress = addressResponse.data.address;
-
+      const selectedState = addressResponse.data.state;
+      const selectedCountry = addressResponse.data.country;
+      const selectedPincode = addressResponse.data.pincode;
+      const selectedCity = addressResponse.data.city; // Add city field
+  
       if (!selectedAddress) {
         alert("Selected address not found!");
         return;
       }
-
-      // Prepare order data for Razorpay
+  
       const orderData = {
         userId,
         addressId: selectedAddressId,
         address: selectedAddress,
+        state: selectedState,
+        country: selectedCountry,
+        pincode: selectedPincode,
+        city: selectedCity, // Include city in order data
         product: product
           ? [
               {
@@ -134,29 +152,27 @@ const Billingpage = () => {
               quantity: item.quantity,
               price: item.productDetails?.price,
             })),
-        cartTotal: cartTotal,
-        shippingCost: shippingCost,
-        taxAmount: taxAmount,
-        totalAmount: totalAmount,
+        cartTotal,
+        shippingCost,
+        taxAmount,
+        totalAmount,
       };
-
+  
       const orderResponse = await axios.post(
         "https://api.prumolet.com/api/orders/createRazorpayOrder",
         { amount: orderData.totalAmount, currency: "INR" }
       );
-
+  
       const { id: razorpayOrderId, currency, amount } = orderResponse.data;
-
-      // Configure Razorpay options
+  
       const options = {
         key: "rzp_test_uG3TI1NzE3ByMl", // Replace with your Razorpay key
-        amount: amount,
-        currency: currency,
+        amount,
+        currency,
         name: "prumolet",
         description: `Order for ${product ? product.title : "multiple items"}`,
         order_id: razorpayOrderId,
         handler: async function (response) {
-          // Payment successful; verify and place the order
           const paymentData = {
             ...orderData,
             razorpayOrderId: response.razorpay_order_id,
@@ -165,13 +181,13 @@ const Billingpage = () => {
             paymentOption: "Razorpay",
             paymentStatus: "Success",
           };
-
+  
           try {
             const paymentResponse = await axios.post(
               "https://api.prumolet.com/api/orders/placeOrder",
               paymentData
             );
-
+  
             if (paymentResponse.data.success) {
               window.location.href = "/orderConformation";
             } else {
@@ -188,6 +204,7 @@ const Billingpage = () => {
         },
         notes: {
           address: selectedAddress,
+          city: selectedCity, // Include city in payment notes
           orderDetails: product
             ? `Product: ${product.title}, Quantity: 1`
             : `Total items: ${cart.length}, Total amount: ₹${totalAmount}`,
@@ -196,11 +213,10 @@ const Billingpage = () => {
           color: "#3399cc",
         },
       };
-
-      // Open Razorpay payment popup
+  
       const razorpay = new window.Razorpay(options);
       razorpay.open();
-
+  
       razorpay.on("payment.failed", function (response) {
         alert(
           `Payment failed: ${response.error.description}. Please try again.`
@@ -211,6 +227,7 @@ const Billingpage = () => {
       alert("An error occurred while processing the Razorpay payment.");
     }
   };
+  
   const handleSelectedPayment = async () => {
     if (!selectedPaymentOption) {
       alert("Please select a payment option.");

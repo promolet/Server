@@ -45,20 +45,17 @@ const AddAddress = ({ userId, onAddressAdded }) => {
       setErrorMessage("Please fill all fields!");
       return;
     }
-
+  
     try {
       const userId = localStorage.getItem("userId");
       const response = await axios.post("https://api.prumolet.com/api/addresses", {
         userId,
         ...formData,
       });
-
-      // Update the addresses array with the new address
+  
       setAddresses((prevAddresses) => [...prevAddresses, response.data]);
-
-      // Pass the newly added address to the parent
-      onAddressAdded(response.data); // Assuming the response contains the new address
-
+      onAddressAdded(response.data);
+  
       setSuccessMessage("Address added successfully!");
       setFormData({
         title: "",
@@ -70,11 +67,16 @@ const AddAddress = ({ userId, onAddressAdded }) => {
         pinCode: "",
       });
       setErrorMessage("");
+  
+      // Scroll to the top of the page smoothly
+      window.scrollTo({ top: 0, behavior: "smooth" });
+  
     } catch (error) {
       setErrorMessage("Error adding address!");
       console.error("Error adding address:", error);
     }
   };
+  
 
   return (
     <div>
@@ -111,7 +113,7 @@ const AddAddress = ({ userId, onAddressAdded }) => {
                       name="title"
                       value={formData.title}
                       onChange={handleChange}
-                      placeholder="Enter Title"
+                      placeholder="Enter Name"
                     />
                   </div>
                 </div>
@@ -254,60 +256,6 @@ const AddAddress = ({ userId, onAddressAdded }) => {
             </div>
           </div>
         </div>
-      </div>
-
-      <div
-        class="modal fade theme-modal-2"
-        id="delate-address"
-        data-bs-backdrop="static"
-        tabindex="-1"
-      >
-        <div class=" modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-            <div class="modal-body p-3">
-              <div class="trash-box text-center">
-                <i class="ri-delete-bin-line icon-box"></i>
-                <h5 class="modal-title">Delete Item?</h5>
-                <p>
-                  This Item Will Be Deleted Permanently. You Can't Undo This
-                  Action.
-                </p>
-                <div class="mt-3 d-flex align-items-center justify-content-center gap-2">
-                  <button
-                    class="btn btn-md btn-outline fw-bold"
-                    data-bs-dismiss="modal"
-                  >
-                    No
-                  </button>
-                  <button
-                    class="btn btn-solid"
-                    data-bs-dismiss="modal"
-                    onClick={handleDeleteAddress}
-                  >
-                    Yes
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      {/* Display all addresses */}
-      <div className="address-list">
-      {addresses.map((address) => (
-  <li key={address._id}>
-    <h5>{address.title}</h5>
-    <p>
-      {address.address.street}, {address.city}, {address.state}, {address.country}, {address.pinCode}
-    </p>
-    <p>
-      <strong>Phone:</strong> {address.phoneNumber}
-    </p>
-  </li>
-))}
-
-
-
       </div>
     </div>
   );

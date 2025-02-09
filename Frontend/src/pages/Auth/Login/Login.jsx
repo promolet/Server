@@ -24,10 +24,8 @@ const Login = () => {
         // Store token in localStorage (or context)
         localStorage.setItem("authToken", token);
         localStorage.setItem("user", JSON.stringify(user));
-        localStorage.setItem("userId", user._id);  // Assuming the user object contains '_id'
-        
-        // Redirect to dashboard
-        navigate("/");
+        localStorage.setItem("userId", user._id);
+        window.location.href = '/'
       } catch (err) {
         console.error("Login error:", err);
         setError("Invalid email or password. Please try again.");

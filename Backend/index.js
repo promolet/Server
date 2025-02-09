@@ -970,6 +970,10 @@ app.post('/api/orders/placeOrder', async (req, res) => {
       addressId,
       paymentOption,
       address,
+      state,
+      country,
+      pincode,
+      city,
       product,
       cartTotal,
       shippingCost,
@@ -1004,6 +1008,10 @@ app.post('/api/orders/placeOrder', async (req, res) => {
     const newOrder = {
       addressId,
       address,
+      state,
+      country,
+      pincode,
+      city,
       paymentOption,
       product,
       cartTotal,
@@ -1504,15 +1512,15 @@ app.get('/api/admin/orders', async (req, res) => {
   try {
     // Fetch all orders with populated user, address, and product details
     const orders = await Order.find()
-      .populate('userId', 'fname email') // Populate user details (fname and email)
+      .populate('userId', 'fname email') // Populate user details
       .populate({
         path: 'orders',
-        select: 'details', // Populate specific fields from the Address model
+        select: 'address state country pincode city paymentOption product cartTotal shippingCost taxAmount totalAmount pointsBalance walletBalance status razorpayOrderId razorpayPaymentId createdAt',
       })
       .populate({
-        path: 'orders.product', // Populate product details from Product table
-        model: 'Product', // Explicitly specify the model name
-        select: 'title price description category', // Specify fields to retrieve from the Product table
+        path: 'orders.product.productId', // Populate product details
+        model: 'Product',
+        select: 'title price description category',
       })
       .exec();
 
@@ -1527,18 +1535,22 @@ app.get('/api/admin/orders', async (req, res) => {
     const formattedOrders = orders.map(order => ({
       orderId: order._id || 'NA',
       user: {
-        id: order.userId._id || "NA",
-        name: order.userId.fname,
-        email: order.userId.email,
+        id: order.userId?._id || 'NA',
+        name: order.userId?.fname || 'N/A',
+        email: order.userId?.email || 'N/A',
       },
       orderDetails: order.orders.map(orderDetail => ({
         orderDetailId: orderDetail._id,
         addressid: orderDetail.addressId || 'Address not available',
         address: orderDetail.address,
+        state: orderDetail.state,
+        country: orderDetail.country,
+        pincode: orderDetail.pincode,
+        city: orderDetail.city || 'N/A', // Ensure city is included
         paymentOption: orderDetail.paymentOption,
         products: orderDetail.product.map(productDetail => ({
           id: productDetail.productId?._id || 'N/A',
-          title: productDetail.productName || 'N/A',
+          title: productDetail.productId?.title || 'N/A',
           description: productDetail.productId?.description || 'N/A',
           category: productDetail.productId?.category || 'N/A',
           price: productDetail.productId?.price || 'N/A',
@@ -1551,8 +1563,8 @@ app.get('/api/admin/orders', async (req, res) => {
         pointsBalance: orderDetail.pointsBalance,
         walletBalance: orderDetail.walletBalance,
         status: orderDetail.status,
-        razorpayOrderId:orderDetail.razorpayOrderId,
-      razorpayPaymentId:orderDetail.razorpayPaymentId,
+        razorpayOrderId: orderDetail.razorpayOrderId,
+        razorpayPaymentId: orderDetail.razorpayPaymentId,
         createdAt: orderDetail.createdAt,
       })),
     }));
@@ -1571,6 +1583,7 @@ app.get('/api/admin/orders', async (req, res) => {
     });
   }
 });
+
 app.get("/api/filter", async (req, res) => {
   try {
     const categories = req.query.categories ? req.query.categories.split(",") : [];

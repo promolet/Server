@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import * as XLSX from 'xlsx'; // Import xlsx for Excel export
 import './order.css';
 
 const Orders = () => {
@@ -64,6 +65,27 @@ const Orders = () => {
     }
   };
 
+  // Function to export data to an Excel file
+  const handleDownloadExcel = () => {
+    const formattedData = orders.flatMap((order) =>
+      order.orderDetails.map((detail) => ({
+        Order_ID: order.orderId || 'N/A',
+        User_Name: order.user.name || 'N/A',
+        Email: order.user.email || 'N/A',
+        Address: `${detail.address || 'N/A'}, ${detail.city || 'N/A'}, ${detail.state || 'N/A'}, ${detail.country || 'N/A'}`,
+        Payment_Option: detail.paymentOption || 'N/A',
+        Products: detail.products.map((p) => `${p.title} (Qty: ${p.quantity})`).join(', '),
+        Total_Amount: `₹${detail.totalAmount || 'N/A'}`,
+        Status: detail.status || 'N/A',
+      }))
+    );
+
+    const ws = XLSX.utils.json_to_sheet(formattedData);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Orders');
+    XLSX.writeFile(wb, 'Orders.xlsx');
+  };
+
   if (loading) {
     return <div>Loading orders...</div>;
   }
@@ -75,6 +97,9 @@ const Orders = () => {
   return (
     <div className="container mt-4">
       <h1>Order Details</h1>
+      <button className="btn btn-success mb-3" onClick={handleDownloadExcel}>
+        Download Excel
+      </button>
       <div className="table-responsive">
         <table className="table table-bordered table-striped">
           <thead>
@@ -97,7 +122,9 @@ const Orders = () => {
                   <td>{order.orderId || 'N/A'}</td>
                   <td>{order.user.name || 'N/A'}</td>
                   <td>{order.user.email || 'N/A'}</td>
-                  <td>{detail.address || 'N/A'}</td>
+                  <td>
+                    {detail.address || 'N/A'}, {detail.city || 'N/A'}, {detail.state || 'N/A'}, {detail.country || 'N/A'}
+                  </td>
                   <td>{detail.paymentOption || 'N/A'}</td>
                   <td>
                     <ul>
