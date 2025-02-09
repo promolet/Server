@@ -970,6 +970,8 @@ app.post('/api/orders/placeOrder', async (req, res) => {
       addressId,
       paymentOption,
       address,
+      title,
+      phoneNumber,
       state,
       country,
       pincode,
@@ -1008,6 +1010,8 @@ app.post('/api/orders/placeOrder', async (req, res) => {
     const newOrder = {
       addressId,
       address,
+      title,
+      phoneNumber,
       state,
       country,
       pincode,
@@ -1515,7 +1519,7 @@ app.get('/api/admin/orders', async (req, res) => {
       .populate('userId', 'fname email') // Populate user details
       .populate({
         path: 'orders',
-        select: 'address state country pincode city paymentOption product cartTotal shippingCost taxAmount totalAmount pointsBalance walletBalance status razorpayOrderId razorpayPaymentId createdAt',
+        select: 'address state country pincode city paymentOption product cartTotal shippingCost taxAmount totalAmount pointsBalance walletBalance status razorpayOrderId razorpayPaymentId createdAt phoneNumber',
       })
       .populate({
         path: 'orders.product.productId', // Populate product details
@@ -1542,29 +1546,31 @@ app.get('/api/admin/orders', async (req, res) => {
       orderDetails: order.orders.map(orderDetail => ({
         orderDetailId: orderDetail._id,
         addressid: orderDetail.addressId || 'Address not available',
-        address: orderDetail.address,
-        state: orderDetail.state,
-        country: orderDetail.country,
-        pincode: orderDetail.pincode,
-        city: orderDetail.city || 'N/A', // Ensure city is included
-        paymentOption: orderDetail.paymentOption,
+        address: orderDetail.address || 'N/A',
+        title: orderDetail.title || 'N/A', // Ensure proper name reference
+        Number: orderDetail.phoneNumber || 'N/A',
+        state: orderDetail.state || 'N/A',
+        country: orderDetail.country || 'N/A',
+        pincode: orderDetail.pincode || 'N/A',
+        city: orderDetail.city || 'N/A',
+        paymentOption: orderDetail.paymentOption || 'N/A',
         products: orderDetail.product.map(productDetail => ({
           id: productDetail.productId?._id || 'N/A',
           title: productDetail.productId?.title || 'N/A',
           description: productDetail.productId?.description || 'N/A',
           category: productDetail.productId?.category || 'N/A',
           price: productDetail.productId?.price || 'N/A',
-          quantity: productDetail.quantity,
+          quantity: productDetail.quantity || 0,
         })),
-        cartTotal: orderDetail.cartTotal,
-        shippingCost: orderDetail.shippingCost,
-        taxAmount: orderDetail.taxAmount,
-        totalAmount: orderDetail.totalAmount,
-        pointsBalance: orderDetail.pointsBalance,
-        walletBalance: orderDetail.walletBalance,
-        status: orderDetail.status,
-        razorpayOrderId: orderDetail.razorpayOrderId,
-        razorpayPaymentId: orderDetail.razorpayPaymentId,
+        cartTotal: orderDetail.cartTotal || 0,
+        shippingCost: orderDetail.shippingCost || 0,
+        taxAmount: orderDetail.taxAmount || 0,
+        totalAmount: orderDetail.totalAmount || 0,
+        pointsBalance: orderDetail.pointsBalance || 0,
+        walletBalance: orderDetail.walletBalance || 0,
+        status: orderDetail.status || 'Pending',
+        razorpayOrderId: orderDetail.razorpayOrderId || 'N/A',
+        razorpayPaymentId: orderDetail.razorpayPaymentId || 'N/A',
         createdAt: orderDetail.createdAt,
       })),
     }));
@@ -1583,6 +1589,7 @@ app.get('/api/admin/orders', async (req, res) => {
     });
   }
 });
+
 
 app.get("/api/filter", async (req, res) => {
   try {

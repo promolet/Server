@@ -33,7 +33,7 @@ const addressSchema = new mongoose.Schema(
           type: String,
           required: true,
         },
-        pinCode: {
+        pincode: {
           type: String,
           required: true,
         },

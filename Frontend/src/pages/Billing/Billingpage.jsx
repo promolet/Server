@@ -23,7 +23,6 @@ const Billingpage = () => {
   const [course, setCourse] = useState(null);
   const [selectedPaymentOption, setSelectedPaymentOption] = useState("");
 
-  // Handle payment option change
   const handlePaymentOptionChange = (e) => {
     setSelectedPaymentOption(e.target.value);
   };
@@ -31,16 +30,14 @@ const Billingpage = () => {
     location.state?.type === "single"
       ? (product?.price || 0) * (product?.quantity || 1) // For single product
       : cart?.reduce((total, item) => {
-          const price = item.productDetails?.price || 0; // Safely access price
-          const quantity = item.quantity || 0; // Default to 0 if quantity is missing
+          const price = item.productDetails?.price || 0; 
+          const quantity = item.quantity || 0; 
           return total + price * quantity;
-        }, 0) || 0; // Default to 0 if cart is empty or undefined
-
-  // Calculate total amount including shipping, tax, points, and wallet balance
+        }, 0) || 0; 
   const totalAmount =
     location.state?.type === "single"
-      ? cartTotal + shippingCost + taxAmount - pointsBalance - walletBalance // Single product case
-      : cartTotal + shippingCost + taxAmount - pointsBalance - walletBalance; // Multiple products case
+      ? cartTotal + shippingCost + taxAmount - pointsBalance - walletBalance
+      : cartTotal + shippingCost + taxAmount - pointsBalance - walletBalance; 
 
   const handleAddressChange = (e) => {
     setSelectedAddressId(e.target.value);
@@ -54,9 +51,11 @@ const Billingpage = () => {
       );
   
       const selectedAddress = addressResponse.data.address;
+      const selectedName = addressResponse.data.title;
+      const selectedNumber = addressResponse.data.phoneNumber;
       const selectedState = addressResponse.data.state;
       const selectedCountry = addressResponse.data.country;
-      const selectedPincode = addressResponse.data.pincode;
+      const selectedPincode = addressResponse.data.pinCode;
       const selectedCity = addressResponse.data.city; // Add city field
   
       if (!selectedAddress) {
@@ -68,6 +67,8 @@ const Billingpage = () => {
         userId,
         addressId: selectedAddressId,
         address: selectedAddress,
+        title: selectedName,
+        phoneNumber : selectedNumber,
         state: selectedState,
         country: selectedCountry,
         pincode: selectedPincode,
@@ -119,6 +120,8 @@ const Billingpage = () => {
       );
   
       const selectedAddress = addressResponse.data.address;
+      const selectedName = addressResponse.data.title;
+      const selectedNumber = addressResponse.data.phoneNumber;
       const selectedState = addressResponse.data.state;
       const selectedCountry = addressResponse.data.country;
       const selectedPincode = addressResponse.data.pincode;
@@ -133,6 +136,8 @@ const Billingpage = () => {
         userId,
         addressId: selectedAddressId,
         address: selectedAddress,
+        Name: selectedName,
+        phoneNumber : selectedNumber,
         state: selectedState,
         country: selectedCountry,
         pincode: selectedPincode,
@@ -227,7 +232,6 @@ const Billingpage = () => {
       alert("An error occurred while processing the Razorpay payment.");
     }
   };
-  
   const handleSelectedPayment = async () => {
     if (!selectedPaymentOption) {
       alert("Please select a payment option.");
@@ -254,7 +258,6 @@ const Billingpage = () => {
       alert("An error occurred while processing your payment.");
     }
   };
-
   useEffect(
     () => {
       const fetchDetails = async () => {
@@ -309,9 +312,7 @@ const Billingpage = () => {
     },
     [location.state],
     [id]
-  ); // Dependency on location.state so the effect reruns on change
-
-  // Fetch product details for each productId
+  ); 
   const fetchProductDetails = async (cartItems) => {
     const updatedCartItems = await Promise.all(
       cartItems.map(async (item) => {

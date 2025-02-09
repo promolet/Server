@@ -7,17 +7,22 @@ const orderSchema = new Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User', // Reference to the User model
-    required: true,
   },
   orders: [
     {
       addressId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Address', // Reference to the Address model
-        required: true,
+     
       },
       address:{
         type : String,
+      },
+      title:{
+        type:String,
+      },
+      phoneNumber:{
+        type:String,
       },
       country:{
         type : String,

@@ -72,7 +72,7 @@ const Orders = () => {
         Order_ID: order.orderId || 'N/A',
         User_Name: order.user.name || 'N/A',
         Email: order.user.email || 'N/A',
-        Address: `${detail.address || 'N/A'}, ${detail.city || 'N/A'}, ${detail.state || 'N/A'}, ${detail.country || 'N/A'}`,
+        Address: `${detail.address || 'N/A'}, ${detail.city || 'N/A'}, ${detail.state || 'N/A'}, ${detail.country || 'N/A'}, ${detail.title},${detail.phoneNumber}`,
         Payment_Option: detail.paymentOption || 'N/A',
         Products: detail.products.map((p) => `${p.title} (Qty: ${p.quantity})`).join(', '),
         Total_Amount: `₹${detail.totalAmount || 'N/A'}`,
@@ -123,7 +123,8 @@ const Orders = () => {
                   <td>{order.user.name || 'N/A'}</td>
                   <td>{order.user.email || 'N/A'}</td>
                   <td>
-                    {detail.address || 'N/A'}, {detail.city || 'N/A'}, {detail.state || 'N/A'}, {detail.country || 'N/A'}
+                    {detail.address || 'N/A'}, {detail.city || 'N/A'}, {detail.state || 'N/A'}, {detail.country || 'N/A'},{detail.title ||
+                    'N/A'},{detail.Number || 'N/A'}
                   </td>
                   <td>{detail.paymentOption || 'N/A'}</td>
                   <td>
