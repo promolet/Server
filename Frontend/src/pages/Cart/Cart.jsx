@@ -136,7 +136,7 @@ const Cart = () => {
                   <tr key={item.productId}>
                     <td>
                       <img
-                        src={item.productDetails.imageUrl || ''}
+                        src={`https://api.prumolet.com/${item.productDetails?.images[0]}`}
                         className="img-fluid"
                         alt={item.productDetails.name || 'Product'}
                       />

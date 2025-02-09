@@ -9,10 +9,9 @@ const ProductCard = ({ product }) => {
 
   // Local offers and price logic
   const offers = [
-    "10% Cashback on UPI Payments",
-    "Flat ₹100 Off on Orders Above ₹500",
+    "Flat 30% Off on Orders Above ₹500",
   ];
-  const originalPrice = (product.price * 1.2).toFixed(2); // Assuming a 20% discount on the original price
+  const originalPrice = (product.price / 0.7).toFixed(2);
 
   const handleAddToCart = async () => {
     try {
@@ -88,10 +87,8 @@ const ProductCard = ({ product }) => {
               <h4 className="price">
                 ₹{product.price.toFixed(2)}
                 <del> ₹{originalPrice}</del>
-                <span className="discounted-price">
-                  {" "}
-                  {Math.round(((originalPrice - product.price) / originalPrice) * 100)}% Off{" "}
-                </span>
+                <span className="discounted-price">30% Off</span>
+
               </h4>
             </div>
             <ul className="offer-panel">
