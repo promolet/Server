@@ -995,10 +995,8 @@ app.post('/api/orders/placeOrder', async (req, res) => {
       });
     }
 
-    // Find the user's existing orders document
     let userOrder = await Order.findOne({ userId });
 
-    // If the user does not have an order document, create one
     if (!userOrder) {
       userOrder = new Order({
         userId,
