@@ -120,7 +120,7 @@ const Orders = () => {
               order.orderDetails.map((detail) => (
                 <tr key={detail.orderDetailId}>
                   <td>{order.orderId || 'N/A'}</td>
-                  <td>{order.user.name || 'N/A'}</td>
+                  <td>{order.user.name || `${detail.title}`}</td>
                   <td>{order.user.email || 'N/A'}</td>
                   <td>
                     {detail.address || 'N/A'}, {detail.city || 'N/A'}, {detail.state || 'N/A'}, {detail.country || 'N/A'},{detail.title ||
