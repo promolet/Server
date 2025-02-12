@@ -10,6 +10,8 @@ const ProductDetail = () => {
   const [isAdded, setIsAdded] = useState(false);
   const [isAddedWishlist, setIsAddedWishlist] = useState(false);
 
+ 
+
   const handleAddToCart = async () => {
     try {
       const userId = localStorage.getItem("userId");
@@ -158,13 +160,14 @@ const ProductDetail = () => {
                         <i class="ri-star-line"></i>
                       </div>
 
-                      <span class="divider">|</span>
-                      <a href="#!">20 Reviews</a>
+
                     </div>
 
                     <div class="price-text">
                       <h3>
-                        <span class="fw-normal">MRP:</span>₹ {product.price}
+                        <span class="fw-normal"></span>₹{product.price.toFixed(2)}
+                        <del> ₹{(product.price / 0.7).toFixed(2)}</del>
+                        <span className="discounted-price">30% Off</span>
                         {/* <div class="product-page-details product-form-box  d-flex
                                 align-items-center flex-column my-0">
                           
