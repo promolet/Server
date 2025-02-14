@@ -1,6 +1,6 @@
 import React from 'react';
 import './about.css';
-
+import img from '../pages/images/about.png'
 const About = () => {
   return (
     <div className="about-page">
@@ -24,7 +24,7 @@ const About = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             <div>
               <img
-                src="../assets/images/about/about-us.jpg"
+                src={img}
                 className="w-full rounded-xl shadow-md"
                 alt="About Us"
               />

@@ -50,7 +50,7 @@ const ProductCard = ({ product }) => {
       <div className="basic-product theme-product-1">
         <div className="overflow-hidden">
           <div className="img-wrapper">
-            <Link to={`/product/${product.title}/${product._id}`}>
+            <Link to={`/shop/${product.title}/${product._id}`}>
               <img
                 src={`https://api.prumolet.com/${product.images[0]}`}
                 className="w-100 img-fluid   lazyload"
