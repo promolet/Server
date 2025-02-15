@@ -63,4 +63,53 @@
     color: #ff9800;
     margin-right: 5px;
   }
-  
+/* Ensure spacing around each card */
+.col-grid-box {
+  padding: 15px; /* Adds spacing inside the grid box */
+}
+
+.basic-product {
+  margin: 15px; /* Adds space around each card */
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  transition: transform 0.3s ease-in-out;
+}
+
+.basic-product:hover {
+  transform: translateY(-5px); /* Slight hover effect */
+}
+
+/* Responsive Grid */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+/* Ensure grid layout adapts to different screen sizes */
+@media (min-width: 1200px) {
+  .col-grid-box {
+    width: 30%; /* 3 cards per row on large screens */
+  }
+}
+
+@media (max-width: 1199px) and (min-width: 768px) {
+  .col-grid-box {
+    width: 45%; /* 2 cards per row on medium screens */
+  }
+}
+
+@media (max-width: 767px) {
+  .col-grid-box {
+    width: 100%; /* 1 card per row on small screens */
+    padding: 10px;
+  }
+
+  .basic-product {
+    margin: 10px;
+  }
+}
