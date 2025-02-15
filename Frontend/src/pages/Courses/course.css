@@ -64,11 +64,11 @@
     margin-right: 5px;
   }
 /* Ensure spacing around each card */
-.col-grid-box {
+.col-grid-box1 {
   padding: 15px; /* Adds spacing inside the grid box */
 }
 
-.basic-product {
+.basic-product1 {
   margin: 15px; /* Adds space around each card */
   padding: 15px;
   border-radius: 10px;
@@ -77,12 +77,12 @@
   transition: transform 0.3s ease-in-out;
 }
 
-.basic-product:hover {
+.basic-product1:hover {
   transform: translateY(-5px); /* Slight hover effect */
 }
 
 /* Responsive Grid */
-.row {
+.row1 {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -92,24 +92,24 @@
 
 /* Ensure grid layout adapts to different screen sizes */
 @media (min-width: 1200px) {
-  .col-grid-box {
+  .col-grid-box1 {
     width: 30%; /* 3 cards per row on large screens */
   }
 }
 
 @media (max-width: 1199px) and (min-width: 768px) {
-  .col-grid-box {
+  .col-grid-box1 {
     width: 45%; /* 2 cards per row on medium screens */
   }
 }
 
 @media (max-width: 767px) {
-  .col-grid-box {
+  .col-grid-box1 {
     width: 100%; /* 1 card per row on small screens */
     padding: 10px;
   }
 
-  .basic-product {
+  .basic-product1 {
     margin: 10px;
   }
 }

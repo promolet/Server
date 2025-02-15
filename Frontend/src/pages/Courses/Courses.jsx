@@ -37,13 +37,13 @@ const Courses = () => {
         </div>
       </div>
 
-      <div className="row">
+      <div className="row1">
         {courses.map((course) => {
           const originalPrice = (course.price / 0.7).toFixed(2); // Assuming 30% off
 
           return (
-            <div className="col-xl-4 col-6 col-grid-box" key={course._id}>
-              <div className="basic-product theme-product-1 position-relative">
+            <div className="col-xl-4 col-6 col-grid-box1" key={course._id}>
+              <div className="basic-product1 theme-product-1 position-relative">
                 <div className="overflow-hidden">
                   <div className="img-wrapper">
                     {/* <Link to={`/course/${course._id}`}> */}
