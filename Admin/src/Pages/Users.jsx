@@ -9,7 +9,7 @@ const Users = () => {
     const fetchUsers = async () => {
       try {
         // Fetch all users
-        const response = await axios.get("http://localhost:5000/api/users");
+        const response = await axios.get("https://api.prumolet.com/api/users");
         const usersData = response.data;
 
         // Fetch order data for each user
