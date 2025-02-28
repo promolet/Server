@@ -12,7 +12,9 @@ const CourseDetail = () => {
   useEffect(() => {
     const fetchProductData = async () => {
       try {
-        const response = await axios.get(`https://api.prumolet.com/courses/${id}`);
+        const response = await axios.get(
+          `https://api.prumolet.com/courses/${id}`
+        );
         setProduct(response.data);
         setLoading(false);
 
@@ -35,11 +37,14 @@ const CourseDetail = () => {
   const handleBuyNow = async () => {
     const userId = localStorage.getItem("userId");
     try {
-      const response = await axios.post("https://api.prumolet.com/create-order", {
-        amount: product.price * 100,
-        currency: "INR",
-        receipt: `order_rcptid_${product._id}`,
-      });
+      const response = await axios.post(
+        "https://api.prumolet.com/create-order",
+        {
+          amount: product.price * 100,
+          currency: "INR",
+          receipt: `order_rcptid_${product._id}`,
+        }
+      );
 
       const { order_id } = response.data;
       const options = {
@@ -58,7 +63,11 @@ const CourseDetail = () => {
           alert("Payment Successful! Course Purchased.");
           setPurchased(true);
         },
-        prefill: { name: "User Name", email: "user@example.com", contact: "9876543210" },
+        prefill: {
+          name: "User Name",
+          email: "user@example.com",
+          contact: "9876543210",
+        },
         theme: { color: "#3399cc" },
       };
       const rzp = new window.Razorpay(options);
@@ -93,13 +102,14 @@ const CourseDetail = () => {
           <div className="row">
             <div className="col-lg-6">
               <iframe
-                className="course-video"
-                width="100%"
+                width="560"
                 height="315"
-                src={`https://api.prumolet.com${product.videos[0]}`}
-                title="Course Video"
-                frameBorder="0"
-                allowFullScreen
+                src="https://www.youtube.com/embed/pmixL0CLQI4?si=7q-FDkbBTdDdX0ZF"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
               ></iframe>
             </div>
             <div className="col-lg-6">
@@ -110,32 +120,51 @@ const CourseDetail = () => {
                   <h3>₹ {product.price}</h3>
                 </div>
                 {!purchased && (
-                  <button onClick={handleBuyNow} className="btn btn-primary buy-btn">
+                  <button
+                    onClick={handleBuyNow}
+                    className="btn btn-primary buy-btn"
+                  >
                     Buy Now
                   </button>
                 )}
               </div>
             </div>
           </div>
-          {purchased && (
-            <div className="additional-videos mt-4">
-              <h3>Course Videos</h3>
-              <ul>
-                {product.videos.map((video, index) => (
-                  <li key={index}>
-                    <iframe
-                      className="bonus-video"
-                      width="100%"
-                      height="200"
-                      src={`https://api.prumolet.com${video}`}
-                      frameBorder="0"
-                      allowFullScreen
-                    ></iframe>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+       
+                   {/* Display Additional Videos After Purchase */}
+{purchased && (
+  <div className="additional-videos mt-4">
+    <h3 className="video-section-title">Course Videos</h3>
+    <div className="video-container">
+      <iframe
+        className="course-video"
+        src="https://www.youtube.com/embed/fhgM4ZGiI3o?si=aaiDj_IpZQBEYwXg"
+        title="Course Video 1"
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+      ></iframe>
+      <iframe
+        className="course-video"
+        src="https://www.youtube.com/embed/9BvoYsQdGw8?si=CZal8nMJky-HXbhM" 
+        title="Course Video 2"
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+      ></iframe>
+      <iframe
+        className="course-video"
+        src="https://www.youtube.com/embed/pmixL0CLQI4?si=7q-FDkbBTdDdX0ZF"
+        title="Course Video 3"
+        frameBorder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+      ></iframe>
+    </div>
+  </div>
+)}
+
+
         </div>
       </section>
     </>

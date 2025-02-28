@@ -9,7 +9,7 @@ const Users = () => {
     const fetchUsers = async () => {
       try {
         // Fetch all users
-        const response = await axios.get("https://api.prumolet.com/api/users");
+        const response = await axios.get("http://localhost:5000/api/users");
         const usersData = response.data;
 
         // Fetch order data for each user
@@ -54,10 +54,11 @@ const Users = () => {
 
     // Create a new worksheet from the users data, including ordersCount and totalSpent
     const worksheet = XLSX.utils.json_to_sheet(
-      users.map(({ _id, fname, lname, email, createdAt, ordersCount, totalSpent }) => ({
+      users.map(({ _id, fname, lname, email,role, createdAt, ordersCount, totalSpent }) => ({
         UserID: _id,
         Name: `${fname} ${lname}`,
         Email: email,
+        User: role,
         CreatedAt: new Date(createdAt).toLocaleDateString(),
         OrdersCount: ordersCount,
         TotalSpent: totalSpent.toFixed(2), // Format as two decimal points
@@ -89,6 +90,7 @@ const Users = () => {
                   <th>User ID</th>
                   <th>Name</th>
                   <th>Email</th>
+                  <th>User</th>
                   <th>Created At</th>
                   <th>Orders Count</th>
                   <th>Total Spent</th>
@@ -103,6 +105,7 @@ const Users = () => {
                         {user.fname} {user.lname}
                       </td>
                       <td>{user.email}</td>
+                      <td>{user.role}</td>
                       <td>{new Date(user.createdAt).toLocaleDateString()}</td>
                       <td>{user.ordersCount}</td>
                       <td>{user.totalSpent.toFixed(2)}</td>

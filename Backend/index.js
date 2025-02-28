@@ -650,11 +650,17 @@ app.get('/api/wishlist/:userId', async (req, res) => {
   }
 });
 app.post("/api/create-account", async (req, res) => {
-  const { fname, lname, email, password } = req.body;
+  const { fname, lname, email, password, role } = req.body;
 
   // Validate input
-  if (!fname || !lname || !email || !password) {
+  if (!fname || !lname || !email || !password || !role) {
     return res.status(400).json({ message: "All fields are required" });
+  }
+
+  // Validate role
+  const validRoles = ["student", "customer"];
+  if (!validRoles.includes(role.toLowerCase())) {
+    return res.status(400).json({ message: "Invalid role selected" });
   }
 
   try {
@@ -678,6 +684,7 @@ app.post("/api/create-account", async (req, res) => {
       lname,
       email,
       password: hashedPassword, // Store the hashed password
+      role: role.toLowerCase(), // Store the role in lowercase for consistency
     });
     await newUser.save();
 
@@ -687,6 +694,7 @@ app.post("/api/create-account", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
 app.post("/api/login", async (req, res) => {
   const { email, password } = req.body;
 
