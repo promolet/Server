@@ -111,7 +111,7 @@ const CourseDetail = () => {
   <iframe
     width="560"
     height="315"
-    src={`https://www.youtube.com/embed/${getYouTubeVideoId(product.youtubeLink)}`}
+    src={`${(product.youtubeLink)}`}
     title="YouTube video player"
     frameBorder="0"
     allowFullScreen
