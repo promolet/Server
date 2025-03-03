@@ -242,14 +242,20 @@ app.post("/api/products/add", upload.array("multiImages", 10), async (req, res) 
 });
 app.post('/api/course/add', upload.array('images', 5), async (req, res) => {
   try {
-    const { title, description, price } = req.body;
+    const { title, description, price, youtubeLink } = req.body;
     const imagePaths = req.files.map(file => `/uploads/${file.filename}`);
 
-    if (!title || !description || !price) {
+    if (!title || !description || !price || !youtubeLink) {
       return res.status(400).json({ message: 'All required fields must be filled.' });
     }
 
-    const newCourse = new Course({ title, description, price, images: imagePaths });
+    // Validate YouTube URL format (basic check)
+    const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.*$/;
+    if (!youtubeRegex.test(youtubeLink)) {
+      return res.status(400).json({ message: 'Invalid YouTube URL.' });
+    }
+
+    const newCourse = new Course({ title, description, price, images: imagePaths, youtubeLink });
     await newCourse.save();
 
     res.status(201).json({ message: 'Course saved successfully!', course: newCourse });

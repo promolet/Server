@@ -15,7 +15,6 @@ const Login = () => {
         const response = await axios.post("https://api.prumolet.com/api/login", {
           email,
           password,
-         
         });
   
         // Assuming the backend responds with a token and user data

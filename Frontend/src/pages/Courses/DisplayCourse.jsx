@@ -80,7 +80,13 @@ const CourseDetail = () => {
 
   if (loading) return <h2>Loading...</h2>;
   if (!product) return <h2>Product not found</h2>;
-
+  const getYouTubeVideoId = (url) => {
+    if (!url) return ""; // Return an empty string if the URL is undefined
+    const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:.*v=|embed\/|v\/|.*[?&]v=))([^"&?\/\s]{11})/);
+    return match ? match[1] : "";
+  };
+  
+  
   return (
     <>
       <div className="breadcrumb-section">
@@ -101,16 +107,18 @@ const CourseDetail = () => {
         <div className="container">
           <div className="row">
             <div className="col-lg-6">
-              <iframe
-                width="560"
-                height="315"
-                src="https://www.youtube.com/embed/pmixL0CLQI4?si=7q-FDkbBTdDdX0ZF"
-                title="YouTube video player"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerpolicy="strict-origin-when-cross-origin"
-                allowfullscreen
-              ></iframe>
+            {product?.youtubeLink && (
+  <iframe
+    width="560"
+    height="315"
+    src={`https://www.youtube.com/embed/${getYouTubeVideoId(product.youtubeLink)}`}
+    title="YouTube video player"
+    frameBorder="0"
+    allowFullScreen
+  ></iframe>
+)}
+
+
             </div>
             <div className="col-lg-6">
               <div className="course-info">

@@ -5,6 +5,7 @@ const AddCourse = ({ product, onClose, onSubmit }) => {
     title: '',
     description: '',
     price: '',
+    youtubeLink: '',
     images: [],
   });
   const [errorMessage, setErrorMessage] = useState('');
@@ -16,6 +17,7 @@ const AddCourse = ({ product, onClose, onSubmit }) => {
         title: product.title || '',
         description: product.description || '',
         price: product.price || '',
+        youtubeLink: product.youtubeLink || '',
         images: product.images || [],
       });
     }
@@ -55,7 +57,7 @@ const AddCourse = ({ product, onClose, onSubmit }) => {
     form.append('title', formData.title);
     form.append('description', formData.description);
     form.append('price', formData.price);
-
+    form.append('youtubeLink', formData.youtubeLink);
     formData.images.forEach((image) => form.append('images', image));
 
     try {
@@ -64,21 +66,30 @@ const AddCourse = ({ product, onClose, onSubmit }) => {
         body: form,
       });
 
-      if (response.ok) {
-        setSuccessMessage('Course saved successfully!');
-        setErrorMessage('');
-        setFormData({
-          title: '',
-          description: '',
-          price: '',
-          images: [],
-        });
-        onSubmit();
-      } else {
-        const errorData = await response.json();
-        setErrorMessage(errorData.message || 'Something went wrong.');
+      const text = await response.text();
+      console.log('Response:', text);
+
+      try {
+        const jsonData = JSON.parse(text);
+        if (response.ok) {
+          setSuccessMessage('Course saved successfully!');
+          setErrorMessage('');
+          setFormData({
+            title: '',
+            description: '',
+            price: '',
+            youtubeLink: '',
+            images: [],
+          });
+          onSubmit();
+        } else {
+          setErrorMessage(jsonData.message || 'Something went wrong.');
+        }
+      } catch (parseError) {
+        setErrorMessage('Invalid response from server.');
       }
     } catch (error) {
+      console.error('Error:', error);
       setErrorMessage('Server error. Please try again.');
     }
   };
@@ -135,6 +146,20 @@ const AddCourse = ({ product, onClose, onSubmit }) => {
                     value={formData.price}
                     onChange={handleChange}
                     placeholder="Enter Course Price"
+                  />
+                </div>
+              </div>
+              <div className="col-12">
+                <div className="form-box">
+                  <label htmlFor="youtubeLink" className="form-label">YouTube Link</label>
+                  <input
+                    type="url"
+                    className="form-control"
+                    id="youtubeLink"
+                    name="youtubeLink"
+                    value={formData.youtubeLink}
+                    onChange={handleChange}
+                    placeholder="Enter YouTube Video Link"
                   />
                 </div>
               </div>
