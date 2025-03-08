@@ -46,24 +46,33 @@ const Courses = () => {
               <div className="basic-product1 theme-product-1 position-relative">
                 <div className="overflow-hidden">
                   <div className="img-wrapper">
-                     <Link to={`/course/${course._id}`}> 
+                    <Link to={`/course/${course._id}`}>
                       <img
                         src={`https://api.prumolet.com${course.images}`}
                         className="w-100 img-fluid lazyload"
                         alt={course.title}
                       />
-                     </Link> 
+                    </Link>
                   </div>
                   <div className="product-detail">
                     <div>
-                      <Link className="product-title" to={`/course/${course._id}`}>
+                      <Link
+                        className="product-title"
+                        to={`/course/${course._id}`}
+                      >
                         {course.title}
-                       </Link> 
+                      </Link>
                       <h6>{course.description}</h6>
                       <h4 className="price">
-                        ₹{course.price.toFixed(2)}
-                        <del> ₹{originalPrice}</del>
-                        <span className="discounted-price">30% Off</span>
+                        {course.price === 0 ? (
+                          "Free"
+                        ) : (
+                          <>
+                            ₹{course.price.toFixed(2)}
+                            <del> ₹{originalPrice}</del>
+                            <span className="discounted-price">30% Off</span>
+                          </>
+                        )}
                       </h4>
                     </div>
                     <ul className="offer-panel">

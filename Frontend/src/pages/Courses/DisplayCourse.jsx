@@ -36,6 +36,30 @@ const CourseDetail = () => {
 
   const handleBuyNow = async () => {
     const userId = localStorage.getItem("userId");
+  
+    if (!userId) {
+      alert("Please log in to purchase the course.");
+      return;
+    }
+  
+    if (product.price === 0) {
+      // Directly mark as purchased if the course is free
+      try {
+        await axios.post("https://api.prumolet.com/api/course/data", {
+          courseId: product._id,
+          userId: userId,
+          paymentId: "free-course",
+        });
+        alert("You have successfully enrolled in this free course!");
+        setPurchased(true);
+      } catch (error) {
+        console.error("Error enrolling in free course:", error);
+        alert("Failed to enroll in the free course. Try again!");
+      }
+      return;
+    }
+  
+    // Razorpay payment flow for paid courses
     try {
       const response = await axios.post(
         "https://api.prumolet.com/create-order",
@@ -45,7 +69,7 @@ const CourseDetail = () => {
           receipt: `order_rcptid_${product._id}`,
         }
       );
-
+  
       const { order_id } = response.data;
       const options = {
         key: "rzp_test_uG3TI1NzE3ByMl",
@@ -77,6 +101,7 @@ const CourseDetail = () => {
       alert("Payment failed. Try again!");
     }
   };
+  
 
   if (loading) return <h2>Loading...</h2>;
   if (!product) return <h2>Product not found</h2>;
@@ -125,7 +150,8 @@ const CourseDetail = () => {
                 <h2 className="course-title">{product.title}</h2>
                 <p className="course-description">{product.description}</p>
                 <div className="course-price">
-                  <h3>₹ {product.price}</h3>
+                <h3>{product.price === 0 ? "Free" : `₹ ${product.price}`}</h3>
+                
                 </div>
                 {!purchased && (
                   <button
