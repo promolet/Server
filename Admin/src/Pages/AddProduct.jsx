@@ -127,7 +127,6 @@ const AddProductModal = ({ onClose, onSubmit }) => {
             </button>
           </div>
           <div className="modal-body">
-            {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
             {successMessage && <div className="alert alert-success">{successMessage}</div>}
             <div className="row g-sm-4 g-2">
               {[

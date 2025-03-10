@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import * as XLSX from 'xlsx'; // Import xlsx for Excel export
+import * as XLSX from 'xlsx';
 import './order.css';
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [editingOrderDetailId, setEditingOrderDetailId] = useState(null);
+  const [editingOrderId, setEditingOrderId] = useState(null);
   const [updatedStatus, setUpdatedStatus] = useState('');
 
   useEffect(() => {
@@ -17,8 +17,8 @@ const Orders = () => {
   const fetchOrders = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('https://api.prumolet.com/api/admin/orders');
-      setOrders(response.data.orders);
+      const response = await axios.get('https://api.prumolet.com/api/orders');
+      setOrders(response.data); // Set the fetched data directly
     } catch (err) {
       setError('Error fetching orders. Please try again later.');
       console.error(err);
@@ -27,17 +27,17 @@ const Orders = () => {
     }
   };
 
-  const handleEditClick = (orderDetailId, currentStatus) => {
-    setEditingOrderDetailId(orderDetailId);
+  const handleEditClick = (orderId, currentStatus) => {
+    setEditingOrderId(orderId);
     setUpdatedStatus(currentStatus);
   };
 
   const handleCancelClick = () => {
-    setEditingOrderDetailId(null);
+    setEditingOrderId(null);
     setUpdatedStatus('');
   };
 
-  const handleUpdateClick = async (orderDetailId) => {
+  const handleUpdateClick = async (orderId) => {
     if (!updatedStatus) {
       alert('Please select a status to update.');
       return;
@@ -45,18 +45,14 @@ const Orders = () => {
 
     try {
       const response = await axios.put(
-        `https://api.prumolet.com/api/admin/orders/${orderDetailId}/status`,
+        `https://api.prumolet.com/api/admin/orders/${orderId}/status`,
         { status: updatedStatus },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
+        { headers: { 'Content-Type': 'application/json' } }
       );
 
       if (response.status === 200) {
         alert('Order status updated successfully!');
-        fetchOrders(); // Refresh the orders list
+        fetchOrders();
         handleCancelClick();
       }
     } catch (err) {
@@ -65,18 +61,19 @@ const Orders = () => {
     }
   };
 
-  // Function to export data to an Excel file
   const handleDownloadExcel = () => {
-    const formattedData = orders.flatMap((order) =>
-      order.orderDetails.map((detail) => ({
-        Order_ID: order.orderId || 'N/A',
-        User_Name: order.user.name || 'N/A',
-        Email: order.user.email || 'N/A',
-        Address: `${detail.address || 'N/A'}, ${detail.city || 'N/A'}, ${detail.state || 'N/A'}, ${detail.country || 'N/A'}, ${detail.title},${detail.Number}`,
-        Payment_Option: detail.paymentOption || 'N/A',
-        Products: detail.products.map((p) => `${p.title} (Qty: ${p.quantity})`).join(', '),
-        Total_Amount: `₹${detail.totalAmount || 'N/A'}`,
-        Status: detail.status || 'N/A',
+    const formattedData = orders.flatMap((userOrder) =>
+      userOrder.orders.map((order) => ({
+        User_ID: userOrder.userId,
+        Order_ID: order._id,
+        Name: order.title,
+        
+        Address: `${order.address}, ${order.city}, ${order.state}, ${order.country}, Phone: ${order.phoneNumber}`,
+        Payment_Option: order.paymentOption,
+        Products: order.product.map((p) => `${p.productName} (Qty: ${p.quantity})`).join(', '),
+        Total_Amount: `₹${order.totalAmount}`,
+        Status: order.status,
+        Order_Date: new Date(order.createdAt).toLocaleString(),
       }))
     );
 
@@ -86,13 +83,8 @@ const Orders = () => {
     XLSX.writeFile(wb, 'Orders.xlsx');
   };
 
-  if (loading) {
-    return <div>Loading orders...</div>;
-  }
-
-  if (error) {
-    return <div className="error-message">{error}</div>;
-  }
+  if (loading) return <div>Loading orders...</div>;
+  if (error) return <div className="error-message">{error}</div>;
 
   return (
     <div className="container mt-4">
@@ -104,9 +96,9 @@ const Orders = () => {
         <table className="table table-bordered table-striped">
           <thead>
             <tr>
+              <th>User ID</th>
               <th>Order ID</th>
-              <th>User Name</th>
-              <th>Email</th>
+              <th>Name</th>
               <th>Address</th>
               <th>Payment Option</th>
               <th>Products</th>
@@ -116,33 +108,29 @@ const Orders = () => {
             </tr>
           </thead>
           <tbody>
-            {orders.map((order) =>
-              order.orderDetails.map((detail) => (
-                <tr key={detail.orderDetailId}>
-                  <td>{order.orderId || 'N/A'}</td>
-                  <td>{order.user.name || `${detail.title}`}</td>
-                  <td>{order.user.email || 'N/A'}</td>
+            {orders.map((userOrder) =>
+              userOrder.orders.map((order) => (
+                <tr key={order._id}>
+                  <td>{userOrder.userId}</td>
+                  <td>{order._id}</td>
+                  <td>{order.title}</td>
                   <td>
-                    {detail.address || 'N/A'}, {detail.city || 'N/A'}, {detail.state || 'N/A'}, {detail.country || 'N/A'},{detail.title ||
-                    'N/A'},{detail.Number || 'N/A'}
+                    {order.address}, {order.city}, {order.state}, {order.country}, Phone: {order.phoneNumber}
                   </td>
-                  <td>{detail.paymentOption || 'N/A'}</td>
+                  <td>{order.paymentOption}</td>
                   <td>
                     <ul>
-                      {detail.products.map((product) => (
-                        <li key={product.id}>
-                          {product.title} (Qty: {product.quantity})
+                      {order.product.map((p) => (
+                        <li key={p.productId}>
+                          {p.productName} (Qty: {p.quantity})
                         </li>
                       ))}
                     </ul>
                   </td>
-                  <td>₹{detail.totalAmount || 'N/A'}</td>
+                  <td>₹{order.totalAmount}</td>
                   <td>
-                    {editingOrderDetailId === detail.orderDetailId ? (
-                      <select
-                        value={updatedStatus}
-                        onChange={(e) => setUpdatedStatus(e.target.value)}
-                      >
+                    {editingOrderId === order._id ? (
+                      <select value={updatedStatus} onChange={(e) => setUpdatedStatus(e.target.value)}>
                         <option value="">Select Status</option>
                         <option value="Pending">Pending</option>
                         <option value="Processing">Processing</option>
@@ -150,32 +138,21 @@ const Orders = () => {
                         <option value="Delivered">Delivered</option>
                       </select>
                     ) : (
-                      <span>{detail.status || 'N/A'}</span>
+                      <span>{order.status}</span>
                     )}
                   </td>
                   <td>
-                    {editingOrderDetailId === detail.orderDetailId ? (
+                    {editingOrderId === order._id ? (
                       <>
-                        <button
-                          className="btn btn-success"
-                          onClick={() => handleUpdateClick(detail.orderDetailId)}
-                        >
+                        <button className="btn btn-success" onClick={() => handleUpdateClick(order._id)}>
                           Save
                         </button>
-                        <button
-                          className="btn btn-secondary ml-2"
-                          onClick={handleCancelClick}
-                        >
+                        <button className="btn btn-secondary ml-2" onClick={handleCancelClick}>
                           Cancel
                         </button>
                       </>
                     ) : (
-                      <button
-                        className="btn btn-primary"
-                        onClick={() =>
-                          handleEditClick(detail.orderDetailId, detail.status)
-                        }
-                      >
+                      <button className="btn btn-primary" onClick={() => handleEditClick(order._id, order.status)}>
                         Edit
                       </button>
                     )}
