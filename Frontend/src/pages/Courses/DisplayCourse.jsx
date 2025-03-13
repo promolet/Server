@@ -122,7 +122,7 @@ const CourseDetail = () => {
               <li className="breadcrumb-item">
                 <Link to="/">Home</Link>
               </li>
-              <li className="breadcrumb-item">Product</li>
+              <li className="breadcrumb-item">course</li>
               <li className="breadcrumb-item active">{product.title}</li>
             </ol>
           </nav>
@@ -153,20 +153,21 @@ const CourseDetail = () => {
                 <h3>{product.price === 0 ? "Free" : `₹ ${product.price}`}</h3>
                 
                 </div>
-                {!purchased && (
-                  <button
-                    onClick={handleBuyNow}
-                    className="btn btn-primary buy-btn"
-                  >
-                    Buy Now
-                  </button>
-                )}
+                {product.price > 0 && !purchased && (
+  <button
+    onClick={handleBuyNow}
+    className="btn btn-primary buy-btn"
+  >
+    Buy Now
+  </button>
+)}
+
               </div>
             </div>
           </div>
        
                    {/* Display Additional Videos After Purchase */}
-{purchased && (
+                   {(purchased || product.price === 0) && (
   <div className="additional-videos mt-4">
     <h3 className="video-section-title">Course Videos</h3>
     <div className="video-container">
