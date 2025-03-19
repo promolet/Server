@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 const AddCourse = ({ product, onClose, onSubmit }) => {
   const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    price: '',
-    youtubeLink: '',
+    title: "",
+    description: "",
+    price: "",
+    youtubeLink: "",
     images: [],
   });
-  const [errorMessage, setErrorMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
     if (product) {
       setFormData({
-        title: product.title || '',
-        description: product.description || '',
-        price: product.price || '',
-        youtubeLink: product.youtubeLink || '',
+        title: product.title || "",
+        description: product.description || "",
+        price: product.price || "",
+        youtubeLink: product.youtubeLink || "",
         images: product.images || [],
       });
     }
@@ -35,9 +35,9 @@ const AddCourse = ({ product, onClose, onSubmit }) => {
     const { name, files } = e.target;
     const uploadedFiles = Array.from(files);
 
-    if (name === 'images') {
-      if (uploadedFiles.some((file) => !file.type.startsWith('image/'))) {
-        setErrorMessage('Only image files are allowed.');
+    if (name === "images") {
+      if (uploadedFiles.some((file) => !file.type.startsWith("image/"))) {
+        setErrorMessage("Only image files are allowed.");
         return;
       }
       setFormData((prev) => ({
@@ -49,48 +49,48 @@ const AddCourse = ({ product, onClose, onSubmit }) => {
 
   const handleSubmit = async () => {
     if (!formData.title || !formData.description || !formData.price) {
-      setErrorMessage('All required fields must be filled.');
+      setErrorMessage("All required fields must be filled.");
       return;
     }
 
     const form = new FormData();
-    form.append('title', formData.title);
-    form.append('description', formData.description);
-    form.append('price', formData.price);
-    form.append('youtubeLink', formData.youtubeLink);
-    formData.images.forEach((image) => form.append('images', image));
+    form.append("title", formData.title);
+    form.append("description", formData.description);
+    form.append("price", formData.price);
+    form.append("youtubeLink", formData.youtubeLink);
+    formData.images.forEach((image) => form.append("images", image));
 
     try {
-      const response = await fetch('https://api.prumolet.com/api/course/add', {
-        method: 'POST',
+      const response = await fetch("https://api.prumolet.com/api/course/add", {
+        method: "POST",
         body: form,
       });
 
       const text = await response.text();
-      console.log('Response:', text);
+      console.log("Response:", text);
 
       try {
         const jsonData = JSON.parse(text);
         if (response.ok) {
-          setSuccessMessage('Course saved successfully!');
-          setErrorMessage('');
+          setSuccessMessage("Course saved successfully!");
+          setErrorMessage("");
           setFormData({
-            title: '',
-            description: '',
-            price: '',
-            youtubeLink: '',
+            title: "",
+            description: "",
+            price: "",
+            youtubeLink: "",
             images: [],
           });
           onSubmit();
         } else {
-          setErrorMessage(jsonData.message || 'Something went wrong.');
+          setErrorMessage(jsonData.message || "Something went wrong.");
         }
       } catch (parseError) {
-        setErrorMessage('Invalid response from server.');
+        setErrorMessage("Invalid response from server.");
       }
     } catch (error) {
-      console.error('Error:', error);
-      setErrorMessage('Server error. Please try again.');
+      console.error("Error:", error);
+      setErrorMessage("Server error. Please try again.");
     }
   };
 
@@ -100,17 +100,28 @@ const AddCourse = ({ product, onClose, onSubmit }) => {
         <div className="modal-content">
           <div className="modal-header">
             <h3 className="modal-title fw-semibold">Add Course</h3>
-            <button type="button" className="btn-close" onClick={onClose}>
+            <button
+              type="button"
+              className="btn-close"
+              data-bs-dismiss="modal"
+              onClick={onClose}
+            >
               <i className="ri-close-line"></i>
             </button>
           </div>
           <div className="modal-body">
-            {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
-            {successMessage && <div className="alert alert-success">{successMessage}</div>}
+            {errorMessage && (
+              <div className="alert alert-danger">{errorMessage}</div>
+            )}
+            {successMessage && (
+              <div className="alert alert-success">{successMessage}</div>
+            )}
             <div className="row g-sm-4 g-2">
               <div className="col-12">
                 <div className="form-box">
-                  <label htmlFor="title" className="form-label">Title *</label>
+                  <label htmlFor="title" className="form-label">
+                    Title *
+                  </label>
                   <input
                     type="text"
                     className="form-control"
@@ -124,7 +135,9 @@ const AddCourse = ({ product, onClose, onSubmit }) => {
               </div>
               <div className="col-12">
                 <div className="form-box">
-                  <label htmlFor="description" className="form-label">Description *</label>
+                  <label htmlFor="description" className="form-label">
+                    Description *
+                  </label>
                   <textarea
                     className="form-control"
                     id="description"
@@ -137,7 +150,9 @@ const AddCourse = ({ product, onClose, onSubmit }) => {
               </div>
               <div className="col-12">
                 <div className="form-box">
-                  <label htmlFor="price" className="form-label">Price *</label>
+                  <label htmlFor="price" className="form-label">
+                    Price *
+                  </label>
                   <input
                     type="number"
                     className="form-control"
@@ -151,7 +166,9 @@ const AddCourse = ({ product, onClose, onSubmit }) => {
               </div>
               <div className="col-12">
                 <div className="form-box">
-                  <label htmlFor="youtubeLink" className="form-label">YouTube Link</label>
+                  <label htmlFor="youtubeLink" className="form-label">
+                    YouTube Link
+                  </label>
                   <input
                     type="url"
                     className="form-control"
@@ -165,7 +182,9 @@ const AddCourse = ({ product, onClose, onSubmit }) => {
               </div>
               <div className="col-12">
                 <div className="form-box">
-                  <label htmlFor="images" className="form-label">Upload Images</label>
+                  <label htmlFor="images" className="form-label">
+                    Upload Images
+                  </label>
                   <input
                     type="file"
                     className="form-control"
@@ -182,7 +201,7 @@ const AddCourse = ({ product, onClose, onSubmit }) => {
                 type="button"
                 className="btn btn-solid"
                 onClick={handleSubmit}
-                data-bs-dismiss={!errorMessage ? 'modal' : undefined}
+                data-bs-dismiss={!errorMessage ? "modal" : undefined}
               >
                 Submit
               </button>

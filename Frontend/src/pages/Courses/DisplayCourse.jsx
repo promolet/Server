@@ -36,12 +36,12 @@ const CourseDetail = () => {
 
   const handleBuyNow = async () => {
     const userId = localStorage.getItem("userId");
-  
+
     if (!userId) {
       alert("Please log in to purchase the course.");
       return;
     }
-  
+
     if (product.price === 0) {
       // Directly mark as purchased if the course is free
       try {
@@ -58,7 +58,7 @@ const CourseDetail = () => {
       }
       return;
     }
-  
+
     // Razorpay payment flow for paid courses
     try {
       const response = await axios.post(
@@ -69,7 +69,7 @@ const CourseDetail = () => {
           receipt: `order_rcptid_${product._id}`,
         }
       );
-  
+
       const { order_id } = response.data;
       const options = {
         key: "rzp_test_uG3TI1NzE3ByMl",
@@ -101,17 +101,17 @@ const CourseDetail = () => {
       alert("Payment failed. Try again!");
     }
   };
-  
 
   if (loading) return <h2>Loading...</h2>;
   if (!product) return <h2>Product not found</h2>;
   const getYouTubeVideoId = (url) => {
     if (!url) return ""; // Return an empty string if the URL is undefined
-    const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:.*v=|embed\/|v\/|.*[?&]v=))([^"&?\/\s]{11})/);
+    const match = url.match(
+      /(?:youtu\.be\/|youtube\.com\/(?:.*v=|embed\/|v\/|.*[?&]v=))([^"&?\/\s]{11})/
+    );
     return match ? match[1] : "";
   };
-  
-  
+
   return (
     <>
       <div className="breadcrumb-section">
@@ -132,74 +132,68 @@ const CourseDetail = () => {
         <div className="container">
           <div className="row">
             <div className="col-lg-6">
-            {product?.youtubeLink && (
-  <iframe
-    width="560"
-    height="315"
-    src={`${(product.youtubeLink)}`}
-    title="YouTube video player"
-    frameBorder="0"
-    allowFullScreen
-  ></iframe>
-)}
-
-
+              {product?.youtubeLink && (
+                <iframe
+                  width="560"
+                  height="315"
+                  src={`${product.youtubeLink}`}
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allowFullScreen
+                ></iframe>
+              )}
             </div>
             <div className="col-lg-6">
               <div className="course-info">
                 <h2 className="course-title">{product.title}</h2>
                 <p className="course-description">{product.description}</p>
                 <div className="course-price">
-                <h3>{product.price === 0 ? "Free" : `₹ ${product.price}`}</h3>
-                
+                  <h3>{product.price === 0 ? "Free" : `₹ ${product.price}`}</h3>
                 </div>
                 {product.price > 0 && !purchased && (
-  <button
-    onClick={handleBuyNow}
-    className="btn btn-primary buy-btn"
-  >
-    Buy Now
-  </button>
-)}
-
+                  <button
+                    onClick={handleBuyNow}
+                    className="btn btn-primary buy-btn"
+                  >
+                    Buy Now
+                  </button>
+                )}
               </div>
             </div>
           </div>
-       
-                   {/* Display Additional Videos After Purchase */}
-                   {(purchased || product.price === 0) && (
-  <div className="additional-videos mt-4">
-    <h3 className="video-section-title">Course Videos</h3>
-    <div className="video-container">
-      <iframe
-        className="course-video"
-        src="https://www.youtube.com/embed/fhgM4ZGiI3o?si=aaiDj_IpZQBEYwXg"
-        title="Course Video 1"
-        frameBorder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-      ></iframe>
-      <iframe
-        className="course-video"
-        src="https://www.youtube.com/embed/9BvoYsQdGw8?si=CZal8nMJky-HXbhM" 
-        title="Course Video 2"
-        frameBorder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-      ></iframe>
-      <iframe
-        className="course-video"
-        src="https://www.youtube.com/embed/pmixL0CLQI4?si=7q-FDkbBTdDdX0ZF"
-        title="Course Video 3"
-        frameBorder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-      ></iframe>
-    </div>
-  </div>
-)}
 
-
+          {/* Display Additional Videos After Purchase */}
+          {(purchased || product.price === 0) && (
+            <div className="additional-videos mt-4">
+              <h3 className="video-section-title">Course Videos</h3>
+              <div className="video-container">
+                <iframe
+                  className="course-video"
+                  src="https://www.youtube.com/embed/fhgM4ZGiI3o?si=aaiDj_IpZQBEYwXg"
+                  title="Course Video 1"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+                <iframe
+                  className="course-video"
+                  src="https://www.youtube.com/embed/9BvoYsQdGw8?si=CZal8nMJky-HXbhM"
+                  title="Course Video 2"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+                <iframe
+                  className="course-video"
+                  src="https://www.youtube.com/embed/pmixL0CLQI4?si=7q-FDkbBTdDdX0ZF"
+                  title="Course Video 3"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              </div>
+            </div>
+          )}
         </div>
       </section>
     </>

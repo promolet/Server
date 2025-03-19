@@ -7,8 +7,8 @@ const ProductSchema = new mongoose.Schema(
     category: { type: String, required: true },
     price: { type: Number, required: true },
     brand: { type: String, required: true }, // Brand of the product
-    model: { type: String, required: true }, // Model of the product
-    partCode: { type: String, required: true }, // Unique part code
+    model: { type: String }, // Model of the product
+    partCode: { type: String }, // Unique part code
     capacity: { type: Number, required: true }, // Capacity value
     capacityUnits: { type: String, required: true }, // Units for the capacity
     typeOfUnit: { type: String, required: true }, // Type of the unit

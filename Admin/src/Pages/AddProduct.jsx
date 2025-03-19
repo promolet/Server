@@ -1,26 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const AddProductModal = ({ onClose, onSubmit }) => {
   const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    category: '',
-    price: '',
-    brand: '',
-    model: '',
-    partCode: '',
-    capacity: '',
-    capacityUnits: '',
-    typeOfUnit: '',
-    phase: '',
-    ratedVoltage: '',
-    stock: '',
-    sku: '',
+    title: "",
+    description: "",
+    category: "",
+    price: "",
+    brand: "",
+    model: "",
+    partCode: "",
+    capacity: "",
+    capacityUnits: "",
+    typeOfUnit: "",
+    phase: "",
+    ratedVoltage: "",
+    stock: "",
+    sku: "",
     images: [],
   });
-  const [errorMessage, setErrorMessage] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const requiredFields = [
+    "title",
+    "description",
+    "category",
+    "price",
+    "brand",
+    "capacity",
+    "capacityUnits",
+    "typeOfUnit",
+    "phase",
+    "ratedVoltage",
+    "stock",
+    "sku",
+  ];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,12 +50,14 @@ const AddProductModal = ({ onClose, onSubmit }) => {
     const validFiles = files.filter(
       (file) =>
         file.size <= 5 * 1024 * 1024 && // Max 5MB
-        ['image/jpeg', 'image/png'].includes(file.type) // Allowed formats
+        ["image/jpeg", "image/png"].includes(file.type) // Allowed formats
     );
     if (validFiles.length !== files.length) {
-      setErrorMessage('Some files were rejected. Only JPG/PNG under 5MB are allowed.');
+      setErrorMessage(
+        "Some files were rejected. Only JPG/PNG under 5MB are allowed."
+      );
     } else {
-      setErrorMessage('');
+      setErrorMessage("");
     }
     setFormData((prev) => ({
       ...prev,
@@ -49,14 +66,13 @@ const AddProductModal = ({ onClose, onSubmit }) => {
   };
 
   const validateForm = () => {
-    const requiredFields = ['title', 'category', 'price', 'stock'];
     for (let field of requiredFields) {
       if (!formData[field]) {
         return `The field "${field}" is required.`;
       }
     }
     if (formData.images.length === 0) {
-      return 'Please upload at least one image.';
+      return "Please upload at least one image.";
     }
     return null;
   };
@@ -71,46 +87,49 @@ const AddProductModal = ({ onClose, onSubmit }) => {
     setIsLoading(true);
     const form = new FormData();
     Object.entries(formData).forEach(([key, value]) => {
-      if (key === 'images') {
-        value.forEach((image) => form.append('multiImages', image));
+      if (key === "images") {
+        value.forEach((image) => form.append("multiImages", image));
       } else {
         form.append(key, value);
       }
     });
 
     try {
-      const response = await fetch('https://api.prumolet.com/api/products/add', {
-        method: 'POST',
-        body: form,
-      });
+      const response = await fetch(
+        "https://api.prumolet.com/api/products/add",
+        {
+          method: "POST",
+          body: form,
+        }
+      );
 
       const responseData = await response.json();
       if (response.ok) {
-        setSuccessMessage('Product added successfully!');
-        setErrorMessage('');
+        setSuccessMessage("Product added successfully!");
+        setErrorMessage("");
         setFormData({
-          title: '',
-          description: '',
-          category: '',
-          price: '',
-          brand: '',
-          model: '',
-          partCode: '',
-          capacity: '',
-          capacityUnits: '',
-          typeOfUnit: '',
-          phase: '',
-          ratedVoltage: '',
-          stock: '',
-          sku: '',
+          title: "",
+          description: "",
+          category: "",
+          price: "",
+          brand: "",
+          model: "",
+          partCode: "",
+          capacity: "",
+          capacityUnits: "",
+          typeOfUnit: "",
+          phase: "",
+          ratedVoltage: "",
+          stock: "",
+          sku: "",
           images: [],
         });
         onSubmit(); // Notify parent component
       } else {
-        setErrorMessage(responseData.message || 'Something went wrong.');
+        setErrorMessage(responseData.message || "Something went wrong.");
       }
     } catch (error) {
-      setErrorMessage('Server error. Please try again.');
+      setErrorMessage("Server error. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -122,41 +141,51 @@ const AddProductModal = ({ onClose, onSubmit }) => {
         <div className="modal-content">
           <div className="modal-header">
             <h3 className="modal-title fw-semibold">Add Product</h3>
-            <button type="button" className="btn-close" onClick={onClose}>
+            <button
+              type="button"
+              className="btn-close"
+              data-bs-dismiss="modal"
+              onClick={onClose}
+            >
               <i className="ri-close-line"></i>
             </button>
           </div>
           <div className="modal-body">
-            {successMessage && <div className="alert alert-success">{successMessage}</div>}
+            {successMessage && (
+              <div className="alert alert-success">{successMessage}</div>
+            )}
             <div className="row g-sm-4 g-2">
               {[
-                'title',
-                'description',
-                'category',
-                'price',
-                'brand',
-                'model',
-                'partCode',
-                'capacity',
-                'capacityUnits',
-                'typeOfUnit',
-                'phase',
-                'ratedVoltage',
-                'stock',
-                'sku',
+                "title",
+                "description",
+                "category",
+                "price",
+                "brand",
+                "model",
+                "partCode",
+                "capacity",
+                "capacityUnits",
+                "typeOfUnit",
+                "phase",
+                "ratedVoltage",
+                "stock",
+                "sku",
               ].map((field) => (
                 <div className="col-12" key={field}>
                   <div className="form-box">
                     <label htmlFor={field} className="form-label">
                       {field
-                        .replace(/([A-Z])/g, ' $1')
+                        .replace(/([A-Z])/g, " $1")
                         .replace(/^./, (str) => str.toUpperCase())}
+                      {requiredFields.includes(field) && <span className="text-danger"> *</span>}
                     </label>
                     <input
                       type={
-                        field === 'price' || field === 'capacity' || field === 'stock'
-                          ? 'number'
-                          : 'text'
+                        field === "price" ||
+                        field === "capacity" ||
+                        field === "stock"
+                          ? "number"
+                          : "text"
                       }
                       className="form-control"
                       id={field}
@@ -164,7 +193,7 @@ const AddProductModal = ({ onClose, onSubmit }) => {
                       value={formData[field]}
                       onChange={handleChange}
                       placeholder={`Enter Product ${field
-                        .replace(/([A-Z])/g, ' $1')
+                        .replace(/([A-Z])/g, " $1")
                         .replace(/^./, (str) => str.toUpperCase())}`}
                     />
                   </div>
@@ -173,7 +202,7 @@ const AddProductModal = ({ onClose, onSubmit }) => {
               <div className="col-12">
                 <div className="form-box">
                   <label htmlFor="images" className="form-label">
-                    Upload Images
+                    Upload Images<span className="text-danger"> *</span>
                   </label>
                   <input
                     type="file"
@@ -194,7 +223,7 @@ const AddProductModal = ({ onClose, onSubmit }) => {
                   onClick={handleSubmit}
                   disabled={isLoading}
                 >
-                  {isLoading ? 'Submitting...' : 'Submit'}
+                  {isLoading ? "Submitting..." : "Submit"}
                 </button>
               </div>
             </div>

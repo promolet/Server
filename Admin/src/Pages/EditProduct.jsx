@@ -131,9 +131,9 @@ const EditProductModal = ({ productId, onClose, onSubmit }) => {
         <div className="modal-content">
           <div className="modal-header">
             <h3 className="modal-title fw-semibold">Edit Product</h3>
-            <button type="button" className="btn-close" onClick={onClose} aria-label="Close">
-              <i className="ri-close-line"></i>
-            </button>
+            <button type="button" className="btn-close" data-bs-dismiss="modal" onClick={onClose}>
+  <i className="ri-close-line"></i>
+</button>
           </div>
           <div className="modal-body">
             {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
