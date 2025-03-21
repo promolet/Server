@@ -163,7 +163,7 @@ const CourseDetail = () => {
           </div>
 
           {/* Display Additional Videos After Purchase */}
-          {(purchased || product.price === 0) && (
+          {/* {(purchased || product.price === 0) && (
             <div className="additional-videos mt-4">
               <h3 className="video-section-title">Course Videos</h3>
               <div className="video-container">
@@ -193,7 +193,7 @@ const CourseDetail = () => {
                 ></iframe>
               </div>
             </div>
-          )}
+          )} */}
         </div>
       </section>
     </>

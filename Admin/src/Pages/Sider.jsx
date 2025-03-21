@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import logo from '../Pages/PrumoLET_logo.png'
 const Sider = () => {
@@ -71,9 +71,9 @@ const Sider = () => {
               </a>
             </li>
             <li className="nav-item">
-              <a data-bs-toggle="tab" className="nav-link" href="#orders">
+              <Link data-bs-toggle="tab" className="nav-link" to="#orders">
                 <i className="ri-file-text-line"></i> orders
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
               <a data-bs-toggle="tab" className="nav-link" href="#products">
