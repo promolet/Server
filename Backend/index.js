@@ -656,10 +656,10 @@ app.get('/api/wishlist/:userId', async (req, res) => {
   }
 });
 app.post("/api/create-account", async (req, res) => {
-  const { fname, lname, email, password, role } = req.body;
+  const { fname, lname, email, mobile, password, role } = req.body;
 
   // Validate input
-  if (!fname || !lname || !email || !password || !role) {
+  if (!fname || !lname || !email || !mobile || !password || !role) {
     return res.status(400).json({ message: "All fields are required" });
   }
 
@@ -670,10 +670,16 @@ app.post("/api/create-account", async (req, res) => {
   }
 
   try {
-    // Check if the user already exists
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
-      return res.status(400).json({ message: "User already exists" });
+    // Check if the email already exists
+    const existingEmail = await User.findOne({ email });
+    if (existingEmail) {
+      return res.status(400).json({ message: "Email already in use" });
+    }
+
+    // Check if the mobile number already exists
+    const existingMobile = await User.findOne({ mobile });
+    if (existingMobile) {
+      return res.status(400).json({ message: "Mobile number already in use" });
     }
 
     // Generate unique user ID
@@ -689,8 +695,9 @@ app.post("/api/create-account", async (req, res) => {
       fname,
       lname,
       email,
-      password: hashedPassword, // Store the hashed password
-      role: role.toLowerCase(), // Store the role in lowercase for consistency
+      mobile, // Store mobile number
+      password: hashedPassword, // Store hashed password
+      role: role.toLowerCase(), // Store role in lowercase for consistency
     });
     await newUser.save();
 

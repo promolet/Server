@@ -7,6 +7,7 @@ const Register = () => {
     lname: '',
     email: '',
     password: '',
+    mobile: '', // Added mobile number
     role: 'student', // Default role
   });
 
@@ -35,6 +36,7 @@ const Register = () => {
         lname: '',
         email: '',
         password: '',
+        mobile: '',
         role: 'student', // Reset role to default
       });
     } catch (error) {
@@ -128,6 +130,26 @@ const Register = () => {
                       id="password"
                       placeholder="Enter your password"
                       value={formData.password}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Mobile Number Field */}
+              <div className="row">
+                <div className="col-md-6">
+                  <div className="form-box">
+                    <label htmlFor="mobile" className="form-label">
+                      Mobile Number
+                    </label>
+                    <input
+                      type="tel"
+                      className="form-control"
+                      id="mobile"
+                      placeholder="Enter your mobile number"
+                      value={formData.mobile}
                       onChange={handleChange}
                       required
                     />
