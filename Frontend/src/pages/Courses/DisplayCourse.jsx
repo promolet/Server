@@ -1,15 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "./CourseDetail.css";
 
 const CourseDetail = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [purchased, setPurchased] = useState(false);
 
   useEffect(() => {
+    const userId = localStorage.getItem("userId");
+
+    // Redirect to login if not authenticated
+    if (!userId) {
+      navigate("/login");
+      return;
+    }
+
     const fetchProductData = async () => {
       try {
         const response = await axios.get(
@@ -18,21 +27,19 @@ const CourseDetail = () => {
         setProduct(response.data);
         setLoading(false);
 
-        // Check if the user has purchased the course
-        const userId = localStorage.getItem("userId");
-        if (userId) {
-          const purchaseResponse = await axios.get(
-            `https://api.prumolet.com/api/course/purchase-status?userId=${userId}&courseId=${id}`
-          );
-          setPurchased(purchaseResponse.data.purchased);
-        }
+        // Check purchase status only if user is authenticated
+        const purchaseResponse = await axios.get(
+          `https://api.prumolet.com/api/course/purchase-status?userId=${userId}&courseId=${id}`
+        );
+        setPurchased(purchaseResponse.data.purchased);
       } catch (error) {
         console.error("Error fetching product data:", error);
         setLoading(false);
       }
     };
+
     fetchProductData();
-  }, [id]);
+  }, [id, navigate]);
 
   const handleBuyNow = async () => {
     const userId = localStorage.getItem("userId");
@@ -43,7 +50,6 @@ const CourseDetail = () => {
     }
 
     if (product.price === 0) {
-      // Directly mark as purchased if the course is free
       try {
         await axios.post("https://api.prumolet.com/api/course/data", {
           courseId: product._id,
@@ -59,7 +65,6 @@ const CourseDetail = () => {
       return;
     }
 
-    // Razorpay payment flow for paid courses
     try {
       const response = await axios.post(
         "https://api.prumolet.com/create-order",
@@ -104,13 +109,6 @@ const CourseDetail = () => {
 
   if (loading) return <h2>Loading...</h2>;
   if (!product) return <h2>Product not found</h2>;
-  const getYouTubeVideoId = (url) => {
-    if (!url) return ""; // Return an empty string if the URL is undefined
-    const match = url.match(
-      /(?:youtu\.be\/|youtube\.com\/(?:.*v=|embed\/|v\/|.*[?&]v=))([^"&?\/\s]{11})/
-    );
-    return match ? match[1] : "";
-  };
 
   return (
     <>
@@ -161,39 +159,6 @@ const CourseDetail = () => {
               </div>
             </div>
           </div>
-
-          {/* Display Additional Videos After Purchase */}
-          {/* {(purchased || product.price === 0) && (
-            <div className="additional-videos mt-4">
-              <h3 className="video-section-title">Course Videos</h3>
-              <div className="video-container">
-                <iframe
-                  className="course-video"
-                  src="https://www.youtube.com/embed/fhgM4ZGiI3o?si=aaiDj_IpZQBEYwXg"
-                  title="Course Video 1"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
-                <iframe
-                  className="course-video"
-                  src="https://www.youtube.com/embed/9BvoYsQdGw8?si=CZal8nMJky-HXbhM"
-                  title="Course Video 2"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
-                <iframe
-                  className="course-video"
-                  src="https://www.youtube.com/embed/pmixL0CLQI4?si=7q-FDkbBTdDdX0ZF"
-                  title="Course Video 3"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
-              </div>
-            </div>
-          )} */}
         </div>
       </section>
     </>

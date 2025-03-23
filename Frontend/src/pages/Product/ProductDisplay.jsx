@@ -15,6 +15,10 @@ const ProductDetail = () => {
   const handleAddToCart = async () => {
     try {
       const userId = localStorage.getItem("userId");
+    if (!userId) {
+      navigate("/login"); // Redirect to login if not authenticated
+      return;
+    }
       const response = await axios.post(
         "https://api.prumolet.com/api/cart/add",
         {
@@ -36,6 +40,10 @@ const ProductDetail = () => {
   const handleAddToWishlist = async () => {
     try {
       const userId = localStorage.getItem("userId");
+    if (!userId) {
+      navigate("/login"); // Redirect to login if not authenticated
+      return;
+    }
       const response = await axios.post(
         "https://api.prumolet.com/api/wishlist/add",
         {

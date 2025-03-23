@@ -27,6 +27,19 @@ const AcError = () => {
 
   return (
     <div style={{ padding: '20px' }}>
+        <div class="breadcrumb-section">
+        <div class="container">
+            <h2>error code</h2>
+            <nav class="theme-breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="/">Home</a>
+                    </li>
+                    <li class="breadcrumb-item active">error code</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
       <h1>AC Error Codes</h1>
       <input
         type="text"
