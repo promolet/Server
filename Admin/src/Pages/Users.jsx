@@ -52,12 +52,13 @@ const Users = () => {
       return;
     }
 
-    // Create a new worksheet from the users data, including ordersCount and totalSpent
+    // Create a new worksheet from the users data, including mobile number
     const worksheet = XLSX.utils.json_to_sheet(
-      users.map(({ _id, fname, lname, email,role, createdAt, ordersCount, totalSpent }) => ({
+      users.map(({ _id, fname, lname, email, mobile, role, createdAt, ordersCount, totalSpent }) => ({
         UserID: _id,
         Name: `${fname} ${lname}`,
         Email: email,
+        Mobile: mobile || "N/A", // Handle missing mobile numbers
         User: role,
         CreatedAt: new Date(createdAt).toLocaleDateString(),
         OrdersCount: ordersCount,
@@ -90,6 +91,7 @@ const Users = () => {
                   <th>User ID</th>
                   <th>Name</th>
                   <th>Email</th>
+                  <th>Mobile</th> {/* Added Mobile Column */}
                   <th>User</th>
                   <th>Created At</th>
                   <th>Orders Count</th>
@@ -101,10 +103,9 @@ const Users = () => {
                   users.map((user) => (
                     <tr key={user._id}>
                       <td>{user._id}</td>
-                      <td>
-                        {user.fname} {user.lname}
-                      </td>
+                      <td>{user.fname} {user.lname}</td>
                       <td>{user.email}</td>
+                      <td>{user.mobile || "N/A"}</td> {/* Display Mobile Number */}
                       <td>{user.role}</td>
                       <td>{new Date(user.createdAt).toLocaleDateString()}</td>
                       <td>{user.ordersCount}</td>
@@ -113,7 +114,7 @@ const Users = () => {
                   ))
                 ) : (
                   <tr>
-                    <td colSpan="6">No users found.</td>
+                    <td colSpan="8">No users found.</td>
                   </tr>
                 )}
               </tbody>
